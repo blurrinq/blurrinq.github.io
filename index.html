@@ -25,32 +25,63 @@
       font-family: 'Courier Prime', monospace;
       font-size: 15px;
       line-height: 1.75;
+      cursor: default;
     }
 
     body {
       max-width: 600px;
       margin: 0 auto;
       padding: 60px 24px 100px;
-      animation: fadein 0.9s ease forwards;
-      opacity: 0;
     }
 
-    @keyframes fadein { to { opacity: 1; } }
+    /* ── staggered fade-in for each child ── */
+    body > * {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    body.loaded > * { opacity: 1; transform: translateY(0); }
+    body.loaded > *:nth-child(1) { transition-delay: 0.05s; }
+    body.loaded > *:nth-child(2) { transition-delay: 0.12s; }
+    body.loaded > *:nth-child(3) { transition-delay: 0.19s; }
+    body.loaded > *:nth-child(4) { transition-delay: 0.26s; }
+    body.loaded > *:nth-child(5) { transition-delay: 0.33s; }
+    body.loaded > *:nth-child(6) { transition-delay: 0.40s; }
+    body.loaded > *:nth-child(7) { transition-delay: 0.47s; }
 
-    /* image */
-    .holo {
+    /* ── logo ── */
+    /* square container with rounded corners — no ear clipping */
+    .logo-wrap {
       display: block;
       width: 120px;
-      margin-bottom: 28px;
-      image-rendering: pixelated;
-      filter: drop-shadow(0 0 10px rgba(139,0,0,0.5)) brightness(0.85);
-      transition: filter 0.3s ease;
+      margin: 0 auto 28px auto;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 0 10px 1px rgba(155,0,0,0.28);
+      transition: box-shadow 0.4s ease;
     }
-    .holo:hover {
-      filter: drop-shadow(0 0 20px rgba(176,0,0,0.8)) brightness(1);
+    .logo-wrap:hover {
+      box-shadow: 0 0 22px 4px rgba(185,0,0,0.5);
     }
+    .logo-wrap img { display: block; width: 100%; height: auto; }
 
-    /* heading */
+    .logo-wrap-sm {
+      display: block;
+      width: 52px;
+      margin: 60px auto 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+      opacity: 0.5;
+      box-shadow: 0 0 7px 1px rgba(140,0,0,0.2);
+      transition: box-shadow 0.4s ease, opacity 0.4s;
+    }
+    .logo-wrap-sm:hover {
+      opacity: 1;
+      box-shadow: 0 0 18px 4px rgba(185,0,0,0.5);
+    }
+    .logo-wrap-sm img { display: block; width: 100%; height: auto; }
+
+    /* ── heading ── */
     h1 {
       font-family: 'IM Fell English', serif;
       font-size: 2.2rem;
@@ -60,15 +91,9 @@
       color: var(--accent-bright);
     }
 
-    /* bio block */
+    /* ── bio ── */
     .bio { margin-bottom: 32px; }
     .bio p { margin-bottom: 5px; }
-    .bio .zh {
-      font-family: 'IM Fell English', serif;
-      font-style: italic;
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
     .bio blockquote {
       border-left: 2px solid var(--accent);
       padding-left: 12px;
@@ -76,34 +101,16 @@
       font-style: italic;
       margin: 14px 0;
     }
-
-    .badges {
-      color: var(--accent-bright);
-      font-size: 1.1rem;
-      margin-right: 4px;
-    }
-
-    .interests {
+    .bio .interests {
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-style: italic;
-      margin-top: 8px;
-    }
-    .hate {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-top: 5px;
-    }
-    .hate a {
-      color: #444;
-      border-bottom: 1px solid transparent;
-    }
-    .hate a:hover {
-      color: var(--link);
-      border-bottom-color: var(--link);
+      margin-top: 10px;
     }
 
-    /* sections */
+    .badges { color: var(--accent-bright); font-size: 1.05rem; margin-right: 3px; }
+
+    /* ── sections ── */
     .section { margin-top: 36px; }
     .section-title {
       font-family: 'IM Fell English', serif;
@@ -119,7 +126,7 @@
     ul li { padding: 2px 0; }
     ul li::before { content: '+ '; color: var(--accent-bright); }
 
-    /* links */
+    /* ── links ── */
     a {
       color: var(--link);
       text-decoration: none;
@@ -128,21 +135,35 @@
     }
     a:hover { border-bottom-color: var(--link); color: #cc2020; }
 
-    /* crown */
-    .crown {
-      display: block;
-      width: 46px;
-      margin-top: 60px;
-      opacity: 0.4;
-      filter: invert(1) sepia(1) saturate(4) hue-rotate(310deg) brightness(0.35);
-      transition: opacity 0.3s, filter 0.3s;
-    }
-    .crown:hover {
-      opacity: 0.85;
-      filter: invert(1) sepia(1) saturate(4) hue-rotate(310deg) brightness(0.55);
+    /* ── custom cursor dot ── */
+    .cursor {
+      position: fixed;
+      width: 6px; height: 6px;
+      background: var(--accent-bright);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease, opacity 0.3s;
+      z-index: 9999;
+      opacity: 0;
     }
 
-    /* selection highlight */
+    /* ── subtle scanline overlay ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,0,0,0.04) 3px,
+        rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 9998;
+    }
+
     ::selection { background: var(--accent); color: #fff; }
 
     @media (max-width: 480px) {
@@ -153,24 +174,30 @@
 </head>
 <body>
 
-  <img class="holo" src="assets/cute.png" alt="cute" />
+  <div class="cursor" id="cursor"></div>
+
+  <a class="logo-wrap" href="#">
+    <img src="assets/cute.png" alt="blurrinq" />
+  </a>
 
   <h1>blurrinq</h1>
 
   <div class="bio">
     <p>: )</p>
-
     <blockquote>do so much work that it would be illogical not to succeed.</blockquote>
 
     <span class="badges">☣</span>
     <a href="https://open.spotify.com/user/blurrinq?si=a300b104ede44bda" target="_blank">listen to my playlists.</a>
     <span class="badges">☣</span>
 
+    <p class="interests">medicine, privacy, gaming, building things.</p>
+  </div>
+
   <div class="section">
     <div class="section-title">files</div>
     <ul>
-      <li><a href="archive.html">my naive articles... &gt;</a></li>
-      <li><a href="lab_list/index.html">blurrinq's thoughts &gt;</a></li>
+      <li><a href="thoughts/index.html">blurrinq's thoughts &gt;</a></li>
+      <li><a href="uses.html">uses &gt;</a></li>
     </ul>
   </div>
 
@@ -179,10 +206,46 @@
     <ul>
       <li><a href="https://www.instagram.com/blurrinq/" target="_blank">insta</a></li>
       <li><a href="http://discord.gg/cutewrld/" target="_blank">discord</a></li>
+      <li><a href="https://www.youtube.com/@Blurrinq" target="_blank">youtube</a></li>
     </ul>
   </div>
 
-  <img class="crown" src="assets/cute.png" alt="cute" />
+  <a class="logo-wrap-sm" href="#">
+    <img src="assets/cute.png" alt="blurrinq" />
+  </a>
+
+  <script>
+    // staggered entrance
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+    });
+
+    // subtle custom cursor
+    const cursor = document.getElementById('cursor');
+    let mx = 0, my = 0, cx = 0, cy = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.opacity = '1';
+    });
+    document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+
+    // smooth lerp follow
+    function animateCursor() {
+      cx += (mx - cx) * 0.18;
+      cy += (my - cy) * 0.18;
+      cursor.style.left = cx + 'px';
+      cursor.style.top  = cy + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // links pulse red on hover via JS for extra smoothness
+    document.querySelectorAll('a').forEach(a => {
+      a.addEventListener('mouseenter', () => cursor.style.transform = 'translate(-50%,-50%) scale(2.5)');
+      a.addEventListener('mouseleave', () => cursor.style.transform = 'translate(-50%,-50%) scale(1)');
+    });
+  </script>
 
 </body>
 </html>
