@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>articles · alexine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000000; --text: #e8e8e8; --accent: #b00000;
+      --muted: #555555; --link: #b00000; --border: #1a1a1a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: var(--bg); color: var(--text); font-family: 'Courier Prime', monospace; font-size: 15px; line-height: 1.75; }
+    body { max-width: 600px; margin: 0 auto; padding: 60px 24px 100px; animation: fadein 0.9s ease forwards; opacity: 0; }
+    @keyframes fadein { to { opacity: 1; } }
+    .back { display: inline-block; color: var(--accent); text-decoration: none; margin-bottom: 32px; font-size: 0.9rem; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+    .back:hover { border-bottom-color: var(--accent); }
+    h1 { font-family: 'IM Fell English', serif; font-size: 2rem; font-weight: normal; color: var(--accent); margin-bottom: 32px; }
+    .post { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .post-date { color: var(--muted); font-size: 0.8rem; margin-bottom: 4px; }
+    .post-title { font-family: 'IM Fell English', serif; font-size: 1.2rem; }
+    .post-title a { color: var(--text); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s, color 0.2s; }
+    .post-title a:hover { border-bottom-color: var(--link); color: var(--link); }
+    .empty { color: var(--muted); font-style: italic; margin-top: 24px; }
+    ::selection { background: #8b0000; color: #fff; }
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html">← back</a>
+  <h1>naive articles</h1>
+  <p class="empty">nothing here yet. check back later.</p>
+  <!--
+  <div class="post">
+    <div class="post-date">2024-01-01</div>
+    <div class="post-title"><a href="#">Your Article Title</a></div>
+  </div>
+  -->
+</body>
+</html>

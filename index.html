@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>♡ alexine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #000000;
+      --text:         #e8e8e8;
+      --accent:       #8b0000;
+      --accent-bright:#b00000;
+      --muted:        #555555;
+      --link:         #b00000;
+      --border:       #1a1a1a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Courier Prime', monospace;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    body {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+      animation: fadein 0.9s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadein { to { opacity: 1; } }
+
+    /* image */
+    .holo {
+      display: block;
+      width: 120px;
+      margin-bottom: 28px;
+      image-rendering: pixelated;
+      filter: drop-shadow(0 0 10px rgba(139,0,0,0.5)) brightness(0.85);
+      transition: filter 0.3s ease;
+    }
+    .holo:hover {
+      filter: drop-shadow(0 0 20px rgba(176,0,0,0.8)) brightness(1);
+    }
+
+    /* heading */
+    h1 {
+      font-family: 'IM Fell English', serif;
+      font-size: 2.2rem;
+      font-weight: normal;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      color: var(--accent-bright);
+    }
+
+    /* bio block */
+    .bio { margin-bottom: 32px; }
+    .bio p { margin-bottom: 5px; }
+    .bio .zh {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    .bio blockquote {
+      border-left: 2px solid var(--accent);
+      padding-left: 12px;
+      color: var(--muted);
+      font-style: italic;
+      margin: 14px 0;
+    }
+
+    .badges {
+      color: var(--accent-bright);
+      font-size: 1.1rem;
+      margin-right: 4px;
+    }
+
+    .interests {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+      margin-top: 8px;
+    }
+    .hate {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+    .hate a {
+      color: #444;
+      border-bottom: 1px solid transparent;
+    }
+    .hate a:hover {
+      color: var(--link);
+      border-bottom-color: var(--link);
+    }
+
+    /* sections */
+    .section { margin-top: 36px; }
+    .section-title {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+      margin-bottom: 10px;
+    }
+
+    ul { list-style: none; }
+    ul li { padding: 2px 0; }
+    ul li::before { content: '+ '; color: var(--accent-bright); }
+
+    /* links */
+    a {
+      color: var(--link);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    a:hover { border-bottom-color: var(--link); color: #cc2020; }
+
+    /* crown */
+    .crown {
+      display: block;
+      width: 46px;
+      margin-top: 60px;
+      opacity: 0.4;
+      filter: invert(1) sepia(1) saturate(4) hue-rotate(310deg) brightness(0.35);
+      transition: opacity 0.3s, filter 0.3s;
+    }
+    .crown:hover {
+      opacity: 0.85;
+      filter: invert(1) sepia(1) saturate(4) hue-rotate(310deg) brightness(0.55);
+    }
+
+    /* selection highlight */
+    ::selection { background: var(--accent); color: #fff; }
+
+    @media (max-width: 480px) {
+      body { padding: 40px 18px 80px; }
+      h1   { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <img class="holo" src="assets/hologirl2.png" alt="hologirl" />
+
+  <h1>♡ alexine</h1>
+
+  <div class="bio">
+    <p class="zh">上帝保佑你</p>
+    <p>Here's my only fixed address</p>
+    <p>i study ml and gpu programming</p>
+    <p>interned at datadom</p>
+    <p>always interested in working on cool projects : feel free to reach out!</p>
+
+    <blockquote>on the way out</blockquote>
+
+    <span class="badges">☣</span>
+    <a href="https://open.spotify.com/user/auwtkox85ovn7ahyyvuv64gql" target="_blank">listen to my sick playlists</a>
+    <span class="badges">☣</span>
+
+    <p class="interests">interest : bio/ml, computer arch, theology, philosophy, music, arts, poetry, opera, theater, horror, books, hiking, experiencing, learning...</p>
+    <p class="hate">pure hate : journalism, ideology, <a href="assets/badfaith.pdf" target="_blank">this</a>, advertising, 2-factor authentication, subscription culture and Microsoft</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">take a look at</div>
+    <ul>
+      <li><a href="archive.html">my naive articles... &gt;</a></li>
+      <li><a href="lab_list/index.html">alexine's lab &gt;</a></li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">my links</div>
+    <ul>
+      <li><a href="https://www.instagram.com/jalexinee/" target="_blank">insta</a></li>
+      <li><a href="https://www.linkedin.com/in/jalexineleport/" target="_blank">marry me</a></li>
+      <li><a href="mailto:alexine.leport@gmail.com">hire me ♡</a></li>
+    </ul>
+  </div>
+
+  <img class="crown" src="assets/crown.png" alt="♛" />
+
+</body>
+</html>
