@@ -26,7 +26,7 @@
     .post:last-child { border-bottom:none; }
     .post-date { color:var(--muted); font-size:0.8rem; margin-bottom:4px; }
     .post-title { font-family:'IM Fell English',serif; font-size:1.2rem; }
-    .post-title a { color:var(--text); text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.2s, color 0.2s; }
+    .post-title a { color:var(--muted); text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.2s, color 0.2s; }
     .post-title a:hover { border-bottom-color:var(--link); color:var(--link); }
     .empty { color:var(--muted); font-style:italic; margin-top:24px; }
     ::selection { background:#8b0000; color:#fff; }
@@ -38,13 +38,18 @@
   <div class="cursor" id="cursor"></div>
   <a class="back" href="../index.html">← back</a>
   <h1>blurrinq's thoughts</h1>
-  <p class="empty">nothing here yet. check back later.</p>
-  <!--
   <div class="post">
-    <div class="post-date">2025-01-01</div>
-    <div class="post-title"><a href="#">your thought title</a></div>
+    <div class="post-date">2025 — I</div>
+    <div class="post-title"><a href="../disappear.html">how to disappear</a></div>
   </div>
-  -->
+  <div class="post">
+    <div class="post-date">2025 — II</div>
+    <div class="post-title"><a href="../walls.html">what's in the walls</a></div>
+  </div>
+  <div class="post">
+    <div class="post-date">2025 — III</div>
+    <div class="post-title"><a href="../watching.html">why they're watching</a></div>
+  </div>
   <script>
     window.addEventListener('load', () => document.body.classList.add('loaded'));
     const cursor = document.getElementById('cursor');
