@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>why they're watching · blurrinq</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#000000; --text:#e8e8e8; --accent:#8b0000;
+      --accent-bright:#b00000; --muted:#555555; --link:#b00000; --border:#1a1a1a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { background:var(--bg); color:var(--text); font-family:'Courier Prime',monospace; font-size:15px; line-height:1.75; }
+    body { max-width:600px; margin:0 auto; padding:60px 24px 100px; }
+
+    body > * { opacity:0; transform:translateY(10px); transition:opacity 0.5s ease, transform 0.5s ease; }
+    body.loaded > * { opacity:1; transform:translateY(0); }
+    body.loaded > *:nth-child(1){transition-delay:0.05s}
+    body.loaded > *:nth-child(2){transition-delay:0.12s}
+    body.loaded > *:nth-child(3){transition-delay:0.19s}
+    body.loaded > *:nth-child(4){transition-delay:0.26s}
+    body.loaded > *:nth-child(5){transition-delay:0.33s}
+    body.loaded > *:nth-child(6){transition-delay:0.40s}
+    body.loaded > *:nth-child(7){transition-delay:0.47s}
+    body.loaded > *:nth-child(8){transition-delay:0.54s}
+    body.loaded > *:nth-child(9){transition-delay:0.61s}
+    body.loaded > *:nth-child(10){transition-delay:0.68s}
+
+    .back { display:inline-block; color:var(--accent-bright); text-decoration:none; margin-bottom:36px; font-size:0.9rem; border-bottom:1px solid transparent; transition:border-color 0.2s; }
+    .back:hover { border-bottom-color:var(--accent-bright); }
+
+    h1 { font-family:'IM Fell English',serif; font-size:2rem; font-weight:normal; color:var(--accent-bright); margin-bottom:6px; }
+    .subtitle { color:var(--muted); font-size:0.82rem; font-style:italic; margin-bottom:36px; }
+
+    .img-block {
+      width:100%; margin:28px 0; position:relative; overflow:hidden;
+    }
+    .img-block img {
+      width:100%; display:block;
+      filter:grayscale(0.6) brightness(0.45) contrast(1.15);
+      transition:filter 0.7s ease;
+    }
+    .img-block:hover img { filter:grayscale(0.2) brightness(0.6) contrast(1.1); }
+    .img-block .caption {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:8px 12px;
+      background:linear-gradient(transparent, rgba(0,0,0,0.88));
+      color:var(--muted); font-size:0.72rem; font-style:italic;
+    }
+
+    .section { margin-top:32px; }
+    .section-title {
+      font-family:'IM Fell English',serif; font-size:0.82rem;
+      letter-spacing:0.09em; color:var(--muted);
+      border-bottom:1px solid var(--border); padding-bottom:4px; margin-bottom:14px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .section-title::after { content:'· · ·'; color:var(--accent); opacity:0.45; font-size:0.72rem; letter-spacing:0.18em; flex:1; }
+
+    p { color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+    p strong { color:var(--accent-bright); font-weight:normal; }
+    em { color:#444; }
+
+    ul { list-style:none; margin-bottom:10px; }
+    ul li { color:var(--muted); font-size:0.9rem; padding:3px 0; }
+    ul li::before { content:'— '; color:var(--accent-bright); }
+
+    blockquote {
+      border-left:2px solid var(--accent); padding-left:14px;
+      color:var(--muted); font-style:italic; margin:20px 0;
+      font-size:0.88rem;
+    }
+
+    .stat-block {
+      display:grid; grid-template-columns:1fr 1fr; gap:1px;
+      background:var(--border); margin:24px 0;
+    }
+    .stat {
+      background:var(--bg); padding:14px 16px;
+    }
+    .stat-num { color:var(--accent-bright); font-family:'IM Fell English',serif; font-size:1.5rem; display:block; }
+    .stat-label { color:var(--muted); font-size:0.75rem; margin-top:2px; }
+
+    .redacted {
+      background:var(--accent-bright); color:var(--accent-bright);
+      cursor:default; transition:background 0.3s, color 0.3s;
+      user-select:none; padding:0 2px;
+    }
+    .redacted:hover { background:transparent; color:var(--muted); }
+
+    .terminal {
+      background:#050505; border:1px solid #1a0000;
+      padding:16px; margin:24px 0; font-size:0.8rem;
+      color:#3a0000;
+    }
+    .terminal .line { margin:2px 0; }
+    .terminal .line.red { color:#6b0000; }
+    .terminal .line.bright { color:var(--accent-bright); }
+
+    body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:9998; }
+    ::selection { background:var(--accent); color:#fff; }
+    @media(max-width:480px){ body{padding:40px 18px 80px} h1{font-size:1.7rem} }
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html">← back</a>
+
+  <h1>why they're watching</h1>
+  <p class="subtitle">not a conspiracy. just the architecture of control.</p>
+
+  <div class="terminal">
+    <div class="line">// initiating surveillance audit</div>
+    <div class="line red">// active data brokers found: 247</div>
+    <div class="line red">// cross-referenced profiles: 14</div>
+    <div class="line bright">// estimated shadow profile accuracy: 94%</div>
+    <div class="line">// source: you</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">the model</div>
+    <p>surveillance isn't a side effect of modern technology. it's the <strong>business model</strong>.</p>
+    <p>the product was never the app. the product was never the service. the product is the map of your behavior, built from ten thousand small observations, sold to people you've never heard of, used for purposes you were never told.</p>
+    <ul>
+      <li>every search query is a window into intent.</li>
+      <li>location data reveals your doctor, your lawyer, your place of worship — without a warrant.</li>
+      <li>purchase history predicts political affiliation with <strong>~87% accuracy</strong>.</li>
+      <li>voice assistants process audio in local buffers. the "wake word" is the threshold. not the start.</li>
+      <li>smart TVs report viewing habits. the TV watching you watch.</li>
+    </ul>
+  </div>
+
+  <div class="img-block">
+    <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=600&q=60" alt="surveillance cameras" loading="lazy" />
+    <div class="caption">cameras in this frame: 7. cameras watching this camera: unknown.</div>
+  </div>
+
+  <div class="stat-block">
+    <div class="stat">
+      <span class="stat-num">700+</span>
+      <div class="stat-label">data brokers operating legally in the US</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">~$240</span>
+      <div class="stat-label">estimated value of your annual data, per person</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">72hrs</span>
+      <div class="stat-label">how long it takes to reconstruct your life from metadata alone</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">0</span>
+      <div class="stat-label">times you were asked if this was okay</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">state-level</div>
+    <p>corporations sell. governments <em>acquire</em>. the distinction matters less than you think, because the data flows between both.</p>
+    <ul>
+      <li>PRISM, XKEYSCORE, MUSCULAR — <span class="redacted">████████████</span> — these are the ones with names.</li>
+      <li>stingrays (IMSI catchers) impersonate cell towers. your phone connects. they log it. no warrant needed in most jurisdictions.</li>
+      <li>license plate readers scan an average of <strong>1,800 plates per hour</strong> per unit. your commute is a database entry.</li>
+      <li>fusion centers share intelligence laterally — between agencies, between states, sometimes between countries.</li>
+      <li>predictive policing algorithms flag people for <span class="redacted">things they haven't done</span>.</li>
+    </ul>
+  </div>
+
+  <div class="img-block">
+    <img src="https://images.unsplash.com/photo-1510511459019-5dda7724fd87?w=600&q=60" alt="city at night surveillance" loading="lazy" />
+    <div class="caption">every light is a node. every node is a record.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">why, actually</div>
+    <p>the cynical answer: money and control. the accurate answer: the same.</p>
+    <p>attention is a resource. behavior is predictable when you have enough data. predictable behavior can be <strong>nudged</strong>. nudged behavior is monetizable. monetizable behavior funds more data collection.</p>
+    <p>it's not malevolent in the way a villain is malevolent. it's systemic. structural. which is worse, because there's no one to blame and nowhere to direct the anger.</p>
+    <ul>
+      <li>they watch because watching is <strong>cheap</strong> now.</li>
+      <li>they watch because the data might be useful <em>later</em>.</li>
+      <li>they watch because no one told them not to.</li>
+      <li>they watch because <span class="redacted">you let them</span>.</li>
+    </ul>
+  </div>
+
+  <blockquote>
+    "if you have nothing to hide, you have nothing to fear" assumes the watcher is always just, the rules are always fair, and the power never changes hands.
+  </blockquote>
+
+  <div class="section">
+    <div class="section-title">what you can do</div>
+    <p>not enough. but not nothing.</p>
+    <ul>
+      <li>threat model first. know what you're protecting and from whom.</li>
+      <li>reduce surface area. every account, every app, every convenience is a data tap.</li>
+      <li>use tools built for adversarial conditions: <strong>signal, tor, mullvad, tuta, monero</strong>.</li>
+      <li>read privacy policies as hostile documents. they are.</li>
+      <li>assume every device with a microphone is listening. behave accordingly.</li>
+      <li>the goal isn't invisibility. it's making collection <strong>expensive enough</strong> to not be worth it for casual actors.</li>
+    </ul>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+  </script>
+</body>
+</html>

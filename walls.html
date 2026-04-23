@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>what's in the walls · blurrinq</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#000000; --text:#e8e8e8; --accent:#8b0000;
+      --accent-bright:#b00000; --muted:#555555; --link:#b00000; --border:#1a1a1a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { background:var(--bg); color:var(--text); font-family:'Courier Prime',monospace; font-size:15px; line-height:1.75; }
+    body { max-width:600px; margin:0 auto; padding:60px 24px 100px; }
+
+    body > * { opacity:0; transform:translateY(10px); transition:opacity 0.5s ease, transform 0.5s ease; }
+    body.loaded > * { opacity:1; transform:translateY(0); }
+    body.loaded > *:nth-child(1){transition-delay:0.05s}
+    body.loaded > *:nth-child(2){transition-delay:0.12s}
+    body.loaded > *:nth-child(3){transition-delay:0.19s}
+    body.loaded > *:nth-child(4){transition-delay:0.26s}
+    body.loaded > *:nth-child(5){transition-delay:0.33s}
+    body.loaded > *:nth-child(6){transition-delay:0.40s}
+    body.loaded > *:nth-child(7){transition-delay:0.47s}
+    body.loaded > *:nth-child(8){transition-delay:0.54s}
+    body.loaded > *:nth-child(9){transition-delay:0.61s}
+    body.loaded > *:nth-child(10){transition-delay:0.68s}
+
+    .back { display:inline-block; color:var(--accent-bright); text-decoration:none; margin-bottom:36px; font-size:0.9rem; border-bottom:1px solid transparent; transition:border-color 0.2s; }
+    .back:hover { border-bottom-color:var(--accent-bright); }
+
+    h1 { font-family:'IM Fell English',serif; font-size:2rem; font-weight:normal; color:var(--accent-bright); margin-bottom:6px; }
+    .subtitle { color:var(--muted); font-size:0.82rem; font-style:italic; margin-bottom:36px; }
+
+    .img-block {
+      width:100%; margin:28px 0; position:relative; overflow:hidden;
+    }
+    .img-block img {
+      width:100%; display:block;
+      filter:grayscale(0.7) brightness(0.4) contrast(1.2);
+      transition:filter 0.8s ease;
+    }
+    .img-block:hover img { filter:grayscale(0.3) brightness(0.55) contrast(1.15); }
+    .img-block .caption {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:8px 12px;
+      background:linear-gradient(transparent, rgba(0,0,0,0.9));
+      color:var(--muted); font-size:0.72rem; font-style:italic;
+    }
+
+    .section { margin-top:32px; }
+    .section-title {
+      font-family:'IM Fell English',serif; font-size:0.82rem;
+      letter-spacing:0.09em; color:var(--muted);
+      border-bottom:1px solid var(--border); padding-bottom:4px; margin-bottom:14px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .section-title::after { content:'· · ·'; color:var(--accent); opacity:0.45; font-size:0.72rem; letter-spacing:0.18em; flex:1; }
+
+    p { color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+    p strong { color:var(--accent-bright); font-weight:normal; }
+
+    ul { list-style:none; margin-bottom:10px; }
+    ul li { color:var(--muted); font-size:0.9rem; padding:3px 0; }
+    ul li::before { content:'— '; color:var(--accent-bright); }
+
+    blockquote {
+      border-left:2px solid var(--accent); padding-left:14px;
+      color:var(--muted); font-style:italic; margin:20px 0;
+      font-size:0.88rem;
+    }
+
+    .case {
+      border:1px solid var(--border); padding:14px 16px; margin:14px 0;
+      position:relative;
+    }
+    .case-label {
+      position:absolute; top:-1px; left:12px;
+      background:var(--bg); padding:0 6px;
+      color:var(--accent-bright); font-size:0.72rem; letter-spacing:0.08em;
+    }
+    .case p { margin-top:8px; }
+
+    .noise {
+      width:100%; height:1px; background:var(--border); margin:28px 0;
+      position:relative; overflow:visible;
+    }
+    .noise::after {
+      content:attr(data-text);
+      position:absolute; left:50%; transform:translateX(-50%);
+      top:-9px; background:var(--bg);
+      padding:0 10px; color:#2a0000; font-size:0.7rem; letter-spacing:0.12em;
+      white-space:nowrap;
+    }
+
+    body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:9998; }
+    ::selection { background:var(--accent); color:#fff; }
+
+    /* subtle flicker on certain text */
+    .flicker { animation: flicker 8s infinite; }
+    @keyframes flicker {
+      0%,89%,91%,93%,100% { opacity:1; }
+      90% { opacity:0.4; }
+      92% { opacity:0.8; }
+    }
+
+    @media(max-width:480px){ body{padding:40px 18px 80px} h1{font-size:1.7rem} }
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html">← back</a>
+
+  <h1 class="flicker">what's in the walls</h1>
+  <p class="subtitle">things found in places that weren't meant to be entered.</p>
+
+  <div class="img-block">
+    <img src="https://images.unsplash.com/photo-1478432780021-b8d273730d8c?w=600&q=60" alt="abandoned room" loading="lazy" />
+    <div class="caption">the building had been empty for eleven years. the calendar on the wall said march.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">what people leave behind</div>
+    <p>abandoned places are crime scenes of ordinary life. when people leave in a hurry — or are taken — the room stays mid-sentence.</p>
+    <ul>
+      <li>medicine still in the cabinet, expired by decades.</li>
+      <li>a child's shoe. singular. no explanation.</li>
+      <li>polaroids of people who don't know they're on a stranger's wall now.</li>
+      <li>letters that were never sent.</li>
+      <li>a hospital wing sealed since a patient <strong>disappeared</strong> and no one updated the paperwork.</li>
+      <li>handwriting on the inside of a closet door. low down. child-height.</li>
+    </ul>
+    <p>objects outlive context. that's the horror of it.</p>
+  </div>
+
+  <div class="noise" data-text="· · · field notes · · ·"></div>
+
+  <div class="case">
+    <div class="case-label">// location: undisclosed</div>
+    <p>psychiatric facility. closed 1987. the intake forms were still stacked on the admissions desk, blank, waiting for patients that never came. room 14 had a lock on the <em>outside</em> of the bathroom door.</p>
+  </div>
+
+  <div class="case">
+    <div class="case-label">// location: undisclosed</div>
+    <p>residential house. last occupied 1994. every clock in the house stopped at the same time. either the power cut simultaneously, or someone went room to room. the front door was locked from the inside.</p>
+  </div>
+
+  <div class="case">
+    <div class="case-label">// location: undisclosed</div>
+    <p>factory floor. one workstation had a coffee mug, still on the desk, rinsed clean. whoever left last was not rushed. they washed their mug. they planned to come back.</p>
+  </div>
+
+  <div class="img-block">
+    <img src="https://images.unsplash.com/photo-1509515837298-2c67a3933321?w=600&q=60" alt="dark stairwell" loading="lazy" />
+    <div class="caption">the stairwell goes down further than the blueprints show.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">forensics of a room</div>
+    <p>you can read a space like a body. every surface has a story if you know what to look for.</p>
+    <ul>
+      <li>dust settles at ~0.1mm per year on undisturbed surfaces. you can date a room.</li>
+      <li>lividity. pooling. distribution. rooms have them too.</li>
+      <li>wear patterns on floors tell you where someone stood most often. habitual paths. worry paths.</li>
+      <li>mold growth indicates moisture. moisture indicates <strong>warmth</strong>. recent warmth.</li>
+      <li>the smell of copper is not rust.</li>
+    </ul>
+  </div>
+
+  <blockquote>
+    "every locked door is a question someone decided not to answer."
+  </blockquote>
+
+  <div class="section">
+    <div class="section-title">between the walls, literally</div>
+    <p>in forensics, in history, in the places people don't check — the walls themselves hold things.</p>
+    <ul>
+      <li>in 1991, a sealed room in a paris apartment was opened after 70 years. the tenant had fled the nazi occupation. everything was still there.</li>
+      <li>contractors regularly find compartments, letters, coins, and <strong>remains</strong> during renovations.</li>
+      <li>the practice of walling something in — structurally or socially — is older than recorded history.</li>
+      <li>some things are hidden deliberately. some things are just forgotten. the room doesn't distinguish.</li>
+    </ul>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+  </script>
+</body>
+</html>

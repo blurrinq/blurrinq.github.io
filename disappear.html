@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>how to disappear · blurrinq</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#000000; --text:#e8e8e8; --accent:#8b0000;
+      --accent-bright:#b00000; --muted:#555555; --link:#b00000; --border:#1a1a1a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { background:var(--bg); color:var(--text); font-family:'Courier Prime',monospace; font-size:15px; line-height:1.75; }
+    body { max-width:600px; margin:0 auto; padding:60px 24px 100px; }
+
+    body > * { opacity:0; transform:translateY(10px); transition:opacity 0.5s ease, transform 0.5s ease; }
+    body.loaded > * { opacity:1; transform:translateY(0); }
+    body.loaded > *:nth-child(1){transition-delay:0.05s}
+    body.loaded > *:nth-child(2){transition-delay:0.12s}
+    body.loaded > *:nth-child(3){transition-delay:0.19s}
+    body.loaded > *:nth-child(4){transition-delay:0.26s}
+    body.loaded > *:nth-child(5){transition-delay:0.33s}
+    body.loaded > *:nth-child(6){transition-delay:0.40s}
+    body.loaded > *:nth-child(7){transition-delay:0.47s}
+    body.loaded > *:nth-child(8){transition-delay:0.54s}
+    body.loaded > *:nth-child(9){transition-delay:0.61s}
+
+    .back { display:inline-block; color:var(--accent-bright); text-decoration:none; margin-bottom:36px; font-size:0.9rem; border-bottom:1px solid transparent; transition:border-color 0.2s; }
+    .back:hover { border-bottom-color:var(--accent-bright); }
+
+    h1 { font-family:'IM Fell English',serif; font-size:2rem; font-weight:normal; color:var(--accent-bright); margin-bottom:6px; }
+    .subtitle { color:var(--muted); font-size:0.82rem; font-style:italic; margin-bottom:36px; }
+
+    .img-block {
+      width:100%; margin:28px 0;
+      position:relative; overflow:hidden;
+    }
+    .img-block img {
+      width:100%; display:block;
+      filter:grayscale(0.6) brightness(0.55) contrast(1.1);
+      transition:filter 0.6s ease;
+    }
+    .img-block:hover img { filter:grayscale(0.2) brightness(0.65) contrast(1.1); }
+    .img-block .caption {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:8px 12px;
+      background:linear-gradient(transparent, rgba(0,0,0,0.85));
+      color:var(--muted); font-size:0.72rem; font-style:italic;
+    }
+
+    .section { margin-top:32px; }
+    .section-title {
+      font-family:'IM Fell English',serif; font-size:0.82rem;
+      letter-spacing:0.09em; color:var(--muted);
+      border-bottom:1px solid var(--border); padding-bottom:4px; margin-bottom:14px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .section-title::after { content:'· · ·'; color:var(--accent); opacity:0.45; font-size:0.72rem; letter-spacing:0.18em; flex:1; }
+
+    p { color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+    p strong { color:var(--accent-bright); font-weight:normal; }
+
+    ul { list-style:none; margin-bottom:10px; }
+    ul li { color:var(--muted); font-size:0.9rem; padding:3px 0; }
+    ul li::before { content:'— '; color:var(--accent-bright); }
+
+    .redacted {
+      background:var(--accent-bright); color:var(--accent-bright);
+      cursor:default; transition:background 0.3s, color 0.3s;
+      user-select:none; padding:0 2px;
+    }
+    .redacted:hover { background:transparent; color:var(--muted); }
+
+    blockquote {
+      border-left:2px solid var(--accent); padding-left:14px;
+      color:var(--muted); font-style:italic; margin:20px 0;
+      font-size:0.88rem;
+    }
+
+    .warning {
+      border:1px solid #2a0000; padding:12px 16px;
+      margin:24px 0; font-size:0.8rem; color:#5a0000;
+      letter-spacing:0.04em;
+    }
+
+    body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:9998; }
+    ::selection { background:var(--accent); color:#fff; }
+    @media(max-width:480px){ body{padding:40px 18px 80px} h1{font-size:1.7rem} }
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html">← back</a>
+
+  <h1>how to disappear</h1>
+  <p class="subtitle">a practical, incomplete guide.</p>
+
+  <div class="warning">// this is not a metaphor.</div>
+
+  <div class="img-block">
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=60" alt="empty corridor" loading="lazy" />
+    <div class="caption">somewhere. you don't need to know where.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">digital</div>
+    <p>the internet remembers everything you were too careless to hide. start there.</p>
+    <ul>
+      <li>use a VPN that <strong>does not log</strong>. not one that says it doesn't — one that structurally <em>cannot</em>.</li>
+      <li>stop using your real name for anything that doesn't legally require it.</li>
+      <li>email is not private. it was never private. treat it like a postcard.</li>
+      <li>your phone is a tracking device that also makes calls. act accordingly.</li>
+      <li>browser fingerprinting doesn't need cookies. your screen resolution, fonts, and timezone are enough.</li>
+      <li>delete old accounts. they're <strong>attack surface</strong>, nothing more.</li>
+      <li>encrypted DNS. always. your ISP sees every domain you query otherwise.</li>
+      <li>the metadata of a file tells more than its contents. strip it.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">physical</div>
+    <p>most people are findable because they're predictable. routine is a vulnerability.</p>
+    <ul>
+      <li>pay cash when it matters.</li>
+      <li>CCTV coverage in most cities is <strong>over 80%</strong> of public space. walk like you know that.</li>
+      <li>EXIF data in photos contains GPS coordinates. your camera is confessing.</li>
+      <li>loyalty cards sell your purchase history. the discount is not free.</li>
+      <li>people remember faces, not <span class="redacted">████████████████</span>.</li>
+      <li>the best time to change your pattern is before you need to.</li>
+    </ul>
+  </div>
+
+  <div class="img-block">
+    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=60" alt="dark alley" loading="lazy" />
+    <div class="caption">the city doesn't notice you. that's the point.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">identity</div>
+    <p>the hardest part isn't the technical side. it's the social graph. you can encrypt everything and still be findable through the people who know you.</p>
+    <ul>
+      <li>compartmentalize. different people know different versions of you.</li>
+      <li>what you <em>don't</em> post is more powerful than what you do.</li>
+      <li>your interests, location, schedule, and habits — together — are a fingerprint.</li>
+      <li>silence is <span class="redacted">underrated</span>.</li>
+    </ul>
+  </div>
+
+  <blockquote>
+    "the most dangerous person is the one no one is looking for."
+  </blockquote>
+
+  <div class="section">
+    <div class="section-title">why bother</div>
+    <p>not paranoia. just the logical conclusion of paying attention.</p>
+    <p>you don't have to be hiding from anything specific to value not being seen. <strong>privacy is not guilt</strong>. it's architecture.</p>
+    <p>disappearing isn't about becoming no one. it's about choosing who gets to know <span class="redacted">████ ███ ████</span>.</p>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+  </script>
+</body>
+</html>
