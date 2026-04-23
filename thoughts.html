@@ -30,12 +30,10 @@
     .post-title a:hover { border-bottom-color:var(--link); color:var(--link); }
     .empty { color:var(--muted); font-style:italic; margin-top:24px; }
     ::selection { background:#8b0000; color:#fff; }
-    .cursor { position:fixed; width:6px; height:6px; background:var(--accent); border-radius:50%; pointer-events:none; transform:translate(-50%,-50%); transition:transform 0.08s ease, opacity 0.3s; z-index:9999; opacity:0; }
     body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:9998; }
   </style>
 </head>
 <body>
-  <div class="cursor" id="cursor"></div>
   <a class="back" href="index.html">← back</a>
   <h1>blurrinq's thoughts</h1>
   <div class="post">
@@ -50,18 +48,5 @@
     <div class="post-date">2025 — III</div>
     <div class="post-title"><a href="watching.html">why they're watching</a></div>
   </div>
-  <script>
-    window.addEventListener('load', () => document.body.classList.add('loaded'));
-    const cursor = document.getElementById('cursor');
-    let mx=0,my=0,cx=0,cy=0;
-    document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.opacity='1'; });
-    document.addEventListener('mouseleave', () => cursor.style.opacity='0');
-    function loop(){ cx+=(mx-cx)*0.18; cy+=(my-cy)*0.18; cursor.style.left=cx+'px'; cursor.style.top=cy+'px'; requestAnimationFrame(loop); }
-    loop();
-    document.querySelectorAll('a').forEach(a => {
-      a.addEventListener('mouseenter', () => cursor.style.transform='translate(-50%,-50%) scale(2.5)');
-      a.addEventListener('mouseleave', () => cursor.style.transform='translate(-50%,-50%) scale(1)');
-    });
-  </script>
 </body>
 </html>
