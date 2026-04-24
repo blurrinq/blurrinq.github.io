@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>e-waste as a threat model · blurrinq</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#000000; --text:#e8e8e8; --accent:#8b0000;
+      --accent-bright:#b00000; --muted:#555555; --link:#b00000; --border:#1a1a1a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { background:var(--bg); color:var(--text); font-family:'Courier Prime',monospace; font-size:15px; line-height:1.75; }
+    body { max-width:600px; margin:0 auto; padding:60px 24px 100px; }
+
+    body > * { opacity:0; transform:translateY(10px); transition:opacity 0.5s ease, transform 0.5s ease; }
+    body.loaded > * { opacity:1; transform:translateY(0); }
+    body.loaded > *:nth-child(1){transition-delay:0.05s}
+    body.loaded > *:nth-child(2){transition-delay:0.11s}
+    body.loaded > *:nth-child(3){transition-delay:0.17s}
+    body.loaded > *:nth-child(4){transition-delay:0.23s}
+    body.loaded > *:nth-child(5){transition-delay:0.29s}
+    body.loaded > *:nth-child(6){transition-delay:0.35s}
+    body.loaded > *:nth-child(7){transition-delay:0.41s}
+    body.loaded > *:nth-child(8){transition-delay:0.47s}
+    body.loaded > *:nth-child(9){transition-delay:0.53s}
+    body.loaded > *:nth-child(10){transition-delay:0.59s}
+    body.loaded > *:nth-child(11){transition-delay:0.65s}
+
+    .back { display:inline-block; color:var(--accent-bright); text-decoration:none; margin-bottom:36px; font-size:0.9rem; border-bottom:1px solid transparent; transition:border-color 0.2s; }
+    .back:hover { border-bottom-color:var(--accent-bright); }
+
+    h1 { font-family:'IM Fell English',serif; font-size:2rem; font-weight:normal; color:var(--accent-bright); margin-bottom:6px; }
+    .subtitle { color:var(--muted); font-size:0.82rem; font-style:italic; margin-bottom:36px; }
+
+    .section { margin-top:32px; }
+    .section-title {
+      font-family:'IM Fell English',serif; font-size:0.82rem;
+      letter-spacing:0.09em; color:var(--muted);
+      border-bottom:1px solid var(--border); padding-bottom:4px; margin-bottom:14px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .section-title::after { content:'· · ·'; color:var(--accent); opacity:0.45; font-size:0.72rem; letter-spacing:0.18em; flex:1; }
+
+    p { color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+    p strong { color:var(--accent-bright); font-weight:normal; }
+
+    ul { list-style:none; margin-bottom:10px; }
+    ul li { color:var(--muted); font-size:0.9rem; padding:3px 0; }
+    ul li::before { content:'— '; color:var(--accent-bright); }
+
+    blockquote {
+      border-left:2px solid var(--accent); padding-left:14px;
+      color:var(--muted); font-style:italic; margin:20px 0; font-size:0.88rem;
+    }
+
+    .img-block { width:100%; margin:24px 0; position:relative; overflow:hidden; }
+    .img-block img {
+      width:100%; display:block;
+      filter:grayscale(0.6) brightness(0.45) contrast(1.2);
+      transition:filter 0.7s ease;
+    }
+    .img-block:hover img { filter:grayscale(0.2) brightness(0.6) contrast(1.1); }
+    .img-block .caption {
+      position:absolute; bottom:0; left:0; right:0; padding:8px 12px;
+      background:linear-gradient(transparent, rgba(0,0,0,0.88));
+      color:var(--muted); font-size:0.72rem; font-style:italic;
+    }
+
+    .compare-block {
+      display:grid; grid-template-columns:1fr 1fr; gap:1px;
+      background:var(--border); margin:20px 0;
+    }
+    .compare-col { background:var(--bg); padding:14px 16px; }
+    .compare-col .col-title { color:var(--accent-bright); font-size:0.78rem; letter-spacing:0.08em; margin-bottom:10px; }
+    .compare-col ul { margin:0; }
+    .compare-col ul li { font-size:0.82rem; padding:2px 0; }
+
+    .terminal {
+      background:#050505; border:1px solid #1a0000;
+      padding:16px; margin:20px 0; font-size:0.8rem;
+    }
+    .terminal .line { margin:2px 0; color:var(--muted); }
+    .terminal .line.red { color:#5a0000; }
+    .terminal .line.bright { color:var(--accent-bright); }
+
+    a { color:var(--link); text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.15s, color 0.15s; }
+    a:hover { border-bottom-color:var(--link); color:#cc2020; }
+
+    body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:9998; }
+    ::selection { background:var(--accent); color:#fff; }
+    @media(max-width:480px){ body{padding:40px 18px 80px} h1{font-size:1.7rem} .compare-block{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <a class="back" href="thoughts.html">← back</a>
+
+  <h1>e-waste as a threat model</h1>
+  <p class="subtitle">buying new hardware is also a security decision. most people don't know that.</p>
+
+  <div class="section">
+    <div class="section-title">the framing nobody uses</div>
+    <p>when people talk about e-waste they talk about landfills, rare earth metals, carbon footprint. all real. all worth caring about.</p>
+    <p>but there's a second argument that almost nobody makes: <strong>new hardware is a surveillance upgrade.</strong></p>
+    <p>every generation of consumer hardware ships with more locked firmware, more persistent subsystems, more vendor control baked into silicon you can't touch. buying new isn't just wasteful. depending on your threat model, it's a step backwards.</p>
+  </div>
+
+  <div class="img-block">
+    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=60" alt="circuit board" loading="lazy"/>
+    <div class="caption">somewhere on this board, code is running that you didn't authorize and cannot inspect.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">what you get with new hardware</div>
+    <p>the spec sheet tells you the CPU clock speed and the RAM. it doesn't mention the rest.</p>
+    <ul>
+      <li><strong>Intel Boot Guard</strong> — introduced on Haswell (4th gen, 2013). cryptographically prevents unsigned firmware. libreboot, coreboot, any third-party firmware: impossible without the OEM's private key. you're locked to whatever lenovo or dell signs.</li>
+      <li><strong>Intel ME (modern)</strong> — on pre-2013 hardware, ME can be removed or neutered entirely. on current hardware, Intel has tightened the architecture so significantly that me_cleaner removes less and less each generation. it's becoming structurally impossible to neutralize.</li>
+      <li><strong>Platform Trust Technology</strong> — ties firmware to specific keys burned into the CPU at manufacture. non-removable. non-auditable.</li>
+      <li><strong>AMD PSP</strong> (on AMD machines) — AMD's equivalent of Intel ME. a separate ARM processor running proprietary firmware. on most OEM AMD hardware, Boot Guard's AMD counterpart is enabled. coreboot is blocked.</li>
+      <li><strong>UEFI Secure Boot (vendor-controlled)</strong> — the implementation matters. on OEM machines, the secure boot keys are the vendor's. you can add your own but you can't remove theirs without losing boot capability on many boards.</li>
+    </ul>
+    <p>every one of these was introduced <em>after</em> the hardware the second-hand market runs on.</p>
+  </div>
+
+  <div class="terminal">
+    <div class="line bright">// firmware attack surface by hardware generation</div>
+    <div class="line red">// 2013+ : Boot Guard enabled, ME unkillable, PSP present on AMD</div>
+    <div class="line red">// 2018+ : ME firmware further hardened, deguard techniques limited</div>
+    <div class="line red">// 2022+ : near-total vendor lock on firmware layer</div>
+    <div class="line"> </div>
+    <div class="line bright">// pre-2013 : ME removable, no Boot Guard, libreboot possible</div>
+    <div class="line bright">// T480/X230 : transitional — limited freedom still achievable</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">the refurbished counter-argument</div>
+    <p>a $100 ThinkPad X220 from eBay runs cachy linux on an SSD, boots in 8 seconds, handles a full browser session, a terminal, and a code editor without breaking a sweat. you know exactly what hardware is in it. the community has documented every screw.</p>
+    <p>a $1,400 laptop from any major manufacturer in 2026 ships with:</p>
+    <ul>
+      <li>firmware you cannot audit</li>
+      <li>a management engine you cannot disable</li>
+      <li>Boot Guard that prevents you from replacing either</li>
+      <li>telemetry baked into the OEM software layer</li>
+      <li>a supply chain you cannot verify</li>
+    </ul>
+    <p>for 90% of daily tasks — browsing, writing, coding, terminal work — <strong>the $100 machine running a lightweight linux distro is the better computer.</strong> not just cheaper. better. faster subjectively. more controllable. fully understood.</p>
+  </div>
+
+  <div class="compare-block">
+    <div class="compare-col">
+      <div class="col-title">// new OEM laptop, 2026</div>
+      <ul>
+        <li>Boot Guard: enabled</li>
+        <li>ME: present, locked</li>
+        <li>firmware: vendor-signed only</li>
+        <li>libreboot: impossible</li>
+        <li>repairability: poor to none</li>
+        <li>community docs: none</li>
+        <li>cost: $800–2000</li>
+      </ul>
+    </div>
+    <div class="compare-col">
+      <div class="col-title">// refurb ThinkPad (pre-2013)</div>
+      <ul>
+        <li>Boot Guard: absent</li>
+        <li>ME: removable/neutered</li>
+        <li>firmware: libreboot possible</li>
+        <li>coreboot: yes</li>
+        <li>repairability: excellent</li>
+        <li>community docs: 15 years deep</li>
+        <li>cost: $50–150</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">the performance myth</div>
+    <p>the "you need new hardware" narrative exists because new hardware exists and needs to be sold. benchmark numbers go up. specs inflate. the gap between what the hardware can do and what people actually do with it keeps growing.</p>
+    <p>consider what most people's laptops actually run:</p>
+    <ul>
+      <li>a browser with 5–15 tabs</li>
+      <li>a text editor or code environment</li>
+      <li>a terminal</li>
+      <li>a music or video player</li>
+      <li>email and messaging</li>
+    </ul>
+    <p>a Sandy Bridge i5 with an SSD and 16GB of RAM handles all of that. the bottleneck in everyday computing stopped being the CPU years ago — it's the <strong>software</strong>. electron apps, bloated browsers, OS telemetry running in the background. remove those and old hardware flies.</p>
+    <p>a minimal linux install on a 2011 thinkpad is faster in daily use than Windows 11 on a 2023 mid-range laptop. that's not a hot take — it's just what happens when you stop paying the software overhead tax.</p>
+  </div>
+
+  <div class="img-block">
+    <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=60" alt="old electronics" loading="lazy"/>
+    <div class="caption">perfectly functional hardware, declared obsolete by software that got heavier.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">the real cost of new</div>
+    <p>buying new hardware in 2026 costs you:</p>
+    <ul>
+      <li><strong>money</strong> — 10x what a capable refurb costs</li>
+      <li><strong>firmware freedom</strong> — Boot Guard is permanent. you cannot opt out later.</li>
+      <li><strong>repairability</strong> — glued, soldered, proprietary. the right to repair movement exists because OEMs spent 10 years making it impossible.</li>
+      <li><strong>longevity</strong> — a 2011 ThinkPad still runs in 2026. a 2022 laptop with soldered RAM and a sealed chassis will be a doorstop when the battery swells and can't be replaced.</li>
+      <li><strong>environmental cost</strong> — the rare earth extraction, the manufacturing emissions, the supply chain — for hardware that does the same work as what you could have bought refurbished.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">the framework exception</div>
+    <p>framework is the only new hardware company doing something structurally different. modular design, documented repair paths, replaceable mainboards. it's the first mainstream laptop in years where "right to repair" isn't just a talking point.</p>
+    <p>it still ships with modern Intel hardware, which means Boot Guard and ME. firmware freedom is still limited. but the <em>physical</em> repairability and longevity argument is real. framework is what the industry should have been doing for 20 years.</p>
+    <p>if you need modern hardware, buy framework. if you don't — and most people don't — buy a refurb ThinkPad and spend the difference on something that matters.</p>
+  </div>
+
+  <blockquote>"the most sustainable computer is the one that already exists."</blockquote>
+
+  <div class="section">
+    <div class="section-title">the actual takeaway</div>
+    <p>your threat model should include firmware. if you care about what runs on your machine — and given everything else on this site, you probably do — then buying hardware from 2013 onwards is a choice to permanently cede control of the deepest layer of your system to a vendor who has no obligation to be honest with you about what it does.</p>
+    <p>a $100 refurb ThinkPad running libreboot and void linux is more private, more controllable, and more repairable than anything you can buy new today.</p>
+    <p>that's not nostalgia. it's just the math.</p>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+  </script>
+</body>
+</html>

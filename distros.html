@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>lightweight linux distros · blurrinq</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#000000; --text:#e8e8e8; --accent:#8b0000;
+      --accent-bright:#b00000; --muted:#555555; --link:#b00000; --border:#1a1a1a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { background:var(--bg); color:var(--text); font-family:'Courier Prime',monospace; font-size:15px; line-height:1.75; }
+    body { max-width:600px; margin:0 auto; padding:60px 24px 100px; }
+
+    body > * { opacity:0; transform:translateY(10px); transition:opacity 0.5s ease, transform 0.5s ease; }
+    body.loaded > * { opacity:1; transform:translateY(0); }
+    body.loaded > *:nth-child(1){transition-delay:0.05s}
+    body.loaded > *:nth-child(2){transition-delay:0.11s}
+    body.loaded > *:nth-child(3){transition-delay:0.17s}
+    body.loaded > *:nth-child(4){transition-delay:0.23s}
+    body.loaded > *:nth-child(5){transition-delay:0.29s}
+    body.loaded > *:nth-child(6){transition-delay:0.35s}
+    body.loaded > *:nth-child(7){transition-delay:0.41s}
+    body.loaded > *:nth-child(8){transition-delay:0.47s}
+    body.loaded > *:nth-child(9){transition-delay:0.53s}
+    body.loaded > *:nth-child(10){transition-delay:0.59s}
+    body.loaded > *:nth-child(11){transition-delay:0.65s}
+    body.loaded > *:nth-child(12){transition-delay:0.71s}
+
+    .back { display:inline-block; color:var(--accent-bright); text-decoration:none; margin-bottom:36px; font-size:0.9rem; border-bottom:1px solid transparent; transition:border-color 0.2s; }
+    .back:hover { border-bottom-color:var(--accent-bright); }
+
+    h1 { font-family:'IM Fell English',serif; font-size:2rem; font-weight:normal; color:var(--accent-bright); margin-bottom:6px; }
+    .subtitle { color:var(--muted); font-size:0.82rem; font-style:italic; margin-bottom:36px; }
+
+    .section { margin-top:32px; }
+    .section-title {
+      font-family:'IM Fell English',serif; font-size:0.82rem;
+      letter-spacing:0.09em; color:var(--muted);
+      border-bottom:1px solid var(--border); padding-bottom:4px; margin-bottom:14px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .section-title::after { content:'· · ·'; color:var(--accent); opacity:0.45; font-size:0.72rem; letter-spacing:0.18em; flex:1; }
+
+    p { color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+    p strong { color:var(--accent-bright); font-weight:normal; }
+
+    ul { list-style:none; margin-bottom:10px; }
+    ul li { color:var(--muted); font-size:0.9rem; padding:3px 0; }
+    ul li::before { content:'— '; color:var(--accent-bright); }
+
+    blockquote {
+      border-left:2px solid var(--accent); padding-left:14px;
+      color:var(--muted); font-style:italic; margin:20px 0; font-size:0.88rem;
+    }
+
+    /* distro card */
+    .distro {
+      border:1px solid var(--border); padding:18px 18px 14px; margin:16px 0;
+      position:relative;
+    }
+    .distro-header {
+      display:flex; justify-content:space-between; align-items:baseline;
+      margin-bottom:10px;
+    }
+    .distro-name {
+      font-family:'IM Fell English',serif; font-size:1.15rem;
+      color:var(--accent-bright);
+    }
+    .distro-tag {
+      font-size:0.72rem; color:var(--muted); letter-spacing:0.06em;
+    }
+    .distro-meta {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+      background:var(--border); margin:10px 0 12px;
+    }
+    .distro-meta-cell { background:var(--bg); padding:6px 10px; }
+    .distro-meta-cell .meta-label { color:#2a2a2a; font-size:0.68rem; letter-spacing:0.06em; }
+    .distro-meta-cell .meta-val { color:var(--muted); font-size:0.78rem; }
+    .distro p { margin-bottom:6px; }
+    .distro .verdict {
+      margin-top:10px; padding-top:10px;
+      border-top:1px solid var(--border);
+      font-size:0.82rem; color:#3a0000;
+    }
+    .distro .verdict strong { color:var(--accent-bright); }
+
+    .rank-badge {
+      position:absolute; top:-1px; right:12px;
+      background:var(--bg); padding:0 8px;
+      color:#2a0000; font-size:0.7rem; letter-spacing:0.1em;
+      border:1px solid var(--border); border-top:none;
+    }
+
+    .warning-inline {
+      background:#050000; border-left:2px solid var(--accent);
+      padding:10px 14px; margin:16px 0; font-size:0.82rem; color:#5a0000;
+    }
+
+    a { color:var(--link); text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.15s, color 0.15s; }
+    a:hover { border-bottom-color:var(--link); color:#cc2020; }
+
+    body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:9998; }
+    ::selection { background:var(--accent); color:#fff; }
+    @media(max-width:480px){ body{padding:40px 18px 80px} h1{font-size:1.7rem} .distro-meta{grid-template-columns:1fr 1fr} }
+  </style>
+</head>
+<body>
+  <a class="back" href="thoughts.html">← back</a>
+
+  <h1>lightweight linux, ranked</h1>
+  <p class="subtitle">opinionated. what actually runs well on old iron in 2026.</p>
+
+  <div class="section">
+    <div class="section-title">before we start</div>
+    <p>this isn't a "best distros for beginners" list. this is for people who want to give a 10–20 year old ThinkPad a second life and understand that the choice of distro matters as much as the hardware.</p>
+    <p>the rule: the lighter the distro, the more it asks of you. you can't have zero RAM usage and a hand-holding installer. pick your trade-off.</p>
+    <p>all RAM figures are approximate idle usage with a minimal desktop or none.</p>
+  </div>
+
+  <div class="distro">
+    <div class="rank-badge">// S tier</div>
+    <div class="distro-header">
+      <div class="distro-name">Void Linux</div>
+      <div class="distro-tag">rolling · runit · independent</div>
+    </div>
+    <div class="distro-meta">
+      <div class="distro-meta-cell">
+        <div class="meta-label">RAM (idle)</div>
+        <div class="meta-val">~80–120MB</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">install difficulty</div>
+        <div class="meta-val">moderate</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">daily driver?</div>
+        <div class="meta-val">yes</div>
+      </div>
+    </div>
+    <p>void is the answer most people end up at after trying everything else. it uses runit instead of systemd — meaning it starts faster, uses less memory, and has no hidden daemons running things you didn't ask for. it has its own package manager (XBPS) that's fast and doesn't get in the way.</p>
+    <p>two variants: glibc (broader software compatibility) and musl (smaller, faster, some software won't compile). on a ThinkPad, use glibc unless you know exactly why you want musl.</p>
+    <ul>
+      <li>no systemd. runit is simpler and faster.</li>
+      <li>rolling release — always current, no version upgrades</li>
+      <li>XFCE, i3, sway, dwm — pick your DE/WM at install or after</li>
+      <li>active development, good package coverage</li>
+      <li>the documentation is honest. it doesn't pretend things are easier than they are.</li>
+    </ul>
+    <div class="verdict"><strong>best for:</strong> people who want a clean, fast, fully controllable daily driver on older hardware. the sweet spot between usability and minimalism.</div>
+  </div>
+
+  <div class="distro">
+    <div class="rank-badge">// S tier</div>
+    <div class="distro-header">
+      <div class="distro-name">CachyOS</div>
+      <div class="distro-tag">rolling · systemd · Arch-based</div>
+    </div>
+    <div class="distro-meta">
+      <div class="distro-meta-cell">
+        <div class="meta-label">RAM (idle)</div>
+        <div class="meta-val">~300–500MB</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">install difficulty</div>
+        <div class="meta-val">easy</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">daily driver?</div>
+        <div class="meta-val">yes</div>
+      </div>
+    </div>
+    <p>not ultralight, but extremely fast for what it is. CachyOS ships with a custom kernel (BORE scheduler, optimized builds) that makes it noticeably snappier than vanilla Arch on the same hardware. if you're on a ThinkPad T480 or anything post-2015, this is where I'd start.</p>
+    <p>heavier than void or alpine but still far leaner than Ubuntu or Fedora. the AUR access is the practical win — nearly any software you need is packaged somewhere.</p>
+    <ul>
+      <li>custom kernel with performance patches — makes a real difference</li>
+      <li>x86-64-v3 optimized builds for capable CPUs</li>
+      <li>good hardware support out of the box — ThinkPads just work</li>
+      <li>Arch base means rolling, up-to-date, and sometimes breaks things</li>
+    </ul>
+    <div class="verdict"><strong>best for:</strong> modern-ish ThinkPads (X230 and newer) where you want speed and convenience without bloat. also: what I run.</div>
+  </div>
+
+  <div class="distro">
+    <div class="rank-badge">// A tier</div>
+    <div class="distro-header">
+      <div class="distro-name">Alpine Linux</div>
+      <div class="distro-tag">stable · OpenRC · musl · independent</div>
+    </div>
+    <div class="distro-meta">
+      <div class="distro-meta-cell">
+        <div class="meta-label">RAM (idle)</div>
+        <div class="meta-val">~30–50MB</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">install difficulty</div>
+        <div class="meta-val">hard</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">daily driver?</div>
+        <div class="meta-val">possible</div>
+      </div>
+    </div>
+    <p>alpine uses musl libc and busybox instead of glibc and GNU coreutils. it is <em>tiny</em>. the base install is under 200MB. it boots in seconds and idles at almost nothing.</p>
+    <p>the trade-off: musl breaks some software. things compiled against glibc need to be recompiled or run in a compatibility layer. if you're doing anything beyond a terminal environment, expect to solve problems. the docker world loves alpine. desktop use is possible but requires effort.</p>
+    <ul>
+      <li>genuinely tiny. no fat anywhere.</li>
+      <li>OpenRC init — fast, clean, understandable</li>
+      <li>strong security defaults — hardened kernel configs available</li>
+      <li>some packages missing or broken due to musl incompatibility</li>
+      <li>best for servers, containers, and people who know what they're doing</li>
+    </ul>
+    <div class="verdict"><strong>best for:</strong> very old hardware (pre-2008), containers, servers, or if you want to understand linux from the ground up. not for beginners.</div>
+  </div>
+
+  <div class="distro">
+    <div class="rank-badge">// A tier</div>
+    <div class="distro-header">
+      <div class="distro-name">Artix Linux</div>
+      <div class="distro-tag">rolling · runit/OpenRC/s6 · Arch-based</div>
+    </div>
+    <div class="distro-meta">
+      <div class="distro-meta-cell">
+        <div class="meta-label">RAM (idle)</div>
+        <div class="meta-val">~120–200MB</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">install difficulty</div>
+        <div class="meta-val">moderate</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">daily driver?</div>
+        <div class="meta-val">yes</div>
+      </div>
+    </div>
+    <p>arch linux without systemd. you get the AUR, the rolling release model, the package coverage — without the init system that half the linux world is tired of arguing about. choose runit, OpenRC, or s6 depending on preference.</p>
+    <ul>
+      <li>AUR access — massive software availability</li>
+      <li>systemd-free — runs meaningfully leaner</li>
+      <li>familiar to anyone who knows Arch</li>
+      <li>slightly smaller community than Arch itself</li>
+    </ul>
+    <div class="verdict"><strong>best for:</strong> Arch users who want to drop systemd without learning a new ecosystem from scratch.</div>
+  </div>
+
+  <div class="distro">
+    <div class="rank-badge">// B tier</div>
+    <div class="distro-header">
+      <div class="distro-name">antiX</div>
+      <div class="distro-tag">stable · sysvinit · Debian-based</div>
+    </div>
+    <div class="distro-meta">
+      <div class="distro-meta-cell">
+        <div class="meta-label">RAM (idle)</div>
+        <div class="meta-val">~100–180MB</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">install difficulty</div>
+        <div class="meta-val">easy</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">daily driver?</div>
+        <div class="meta-val">yes</div>
+      </div>
+    </div>
+    <p>Debian-based but systemd-free, designed explicitly for old hardware. it ships with lightweight window managers (IceWM, fluxbox) and a full desktop out of the box. the most accessible option on this list — you can hand it to someone who's never used linux and they'll be okay.</p>
+    <p>the trade-off is the Debian base — stable, yes, but packages lag behind. you won't get the latest software versions quickly.</p>
+    <ul>
+      <li>32-bit support — good for truly ancient hardware</li>
+      <li>no systemd, ships functional out of the box</li>
+      <li>Debian's stability and package ecosystem</li>
+      <li>conservative release cycle — not rolling</li>
+    </ul>
+    <div class="verdict"><strong>best for:</strong> very old ThinkPads (T60, X60 era), people new to linux, anyone who needs a working desktop on minimal hardware with minimal setup.</div>
+  </div>
+
+  <div class="distro">
+    <div class="rank-badge">// specialist</div>
+    <div class="distro-header">
+      <div class="distro-name">Tiny Core Linux</div>
+      <div class="distro-tag">modular · BusyBox · independent</div>
+    </div>
+    <div class="distro-meta">
+      <div class="distro-meta-cell">
+        <div class="meta-label">RAM (idle)</div>
+        <div class="meta-val">~46MB minimum</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">install difficulty</div>
+        <div class="meta-val">very hard</div>
+      </div>
+      <div class="distro-meta-cell">
+        <div class="meta-label">daily driver?</div>
+        <div class="meta-val">unlikely</div>
+      </div>
+    </div>
+    <p>tinycore is a category of its own. the base image is <strong>24MB</strong>. it runs entirely in RAM. it requires just 46MB of RAM to boot. it keeps machines from the early 2000s alive — machines with Pentium 4 processors and 256MB of RAM that no other distro will touch.</p>
+    <p>the architecture is modular: you boot a minimal core and load only the extensions you need. everything is ephemeral by default. nothing is installed — it's loaded into RAM on boot from a local directory or the internet. the concept is almost alien the first time you encounter it.</p>
+
+    <div class="warning-inline">the trade-offs are severe. tinycore is not a general-purpose OS. it is a survival tool for hardware that should be dead. it requires understanding the extension model, manual package management, and comfort with a system that will forget changes on reboot unless explicitly persisted.</div>
+
+    <ul>
+      <li>24MB ISO (Core), 248MB with WiFi support (CorePlus)</li>
+      <li>i486DX minimum CPU. genuinely runs on 20-year-old machines.</li>
+      <li>runs entirely from RAM — fast on slow hardware</li>
+      <li>WiFi: use CorePlus, or be on a wired connection</li>
+      <li>software: extension-based. the repository exists but it's limited.</li>
+      <li>persistence requires manual setup — nothing survives a reboot by default</li>
+      <li>documentation is sparse and assumes knowledge</li>
+    </ul>
+    <div class="verdict"><strong>best for:</strong> resurrecting hardware from 2000–2008 that otherwise goes to landfill. also: a fascinating experiment in how minimal a working OS can actually be. not for primary use.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">the honest summary</div>
+    <p>you are not going to get 2026 performance from 2006 hardware regardless of the distro. the CPU is what it is. the RAM ceiling is real. video conferencing at 1080p is going to stutter on anything pre-2012.</p>
+    <p>what you <em>can</em> get:</p>
+    <ul>
+      <li>a fast, responsive terminal environment on hardware that costs almost nothing</li>
+      <li>a browser session that doesn't lag — on void or alpine with a minimal WM</li>
+      <li>a programming environment that feels snappy — LSP, compiler, git — all fine</li>
+      <li>a machine you fully understand and fully control, down to the firmware</li>
+    </ul>
+    <p>the distro is only part of the equation. pair it with a minimal window manager (i3, sway, dwm, openbox) instead of a full DE, kill the services you don't use, and a 10-year-old ThinkPad feels like a tool again instead of a liability.</p>
+
+    <blockquote>the machine isn't slow. the software you've been running on it is.</blockquote>
+  </div>
+
+  <div class="section">
+    <div class="section-title">quick reference</div>
+    <ul>
+      <li><strong>T480/X230 and newer</strong> — CachyOS or Void</li>
+      <li><strong>X220/T420 era</strong> — Void or Artix</li>
+      <li><strong>X200/T400 era</strong> — Alpine or antiX</li>
+      <li><strong>pre-2006 hardware</strong> — TinyCore, antiX 32-bit</li>
+      <li><strong>servers / containers</strong> — Alpine, always Alpine</li>
+    </ul>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+  </script>
+</body>
+</html>

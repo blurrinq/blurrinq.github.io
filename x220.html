@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>the x220 cult · blurrinq</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#000000; --text:#e8e8e8; --accent:#8b0000;
+      --accent-bright:#b00000; --muted:#555555; --link:#b00000; --border:#1a1a1a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { background:var(--bg); color:var(--text); font-family:'Courier Prime',monospace; font-size:15px; line-height:1.75; }
+    body { max-width:600px; margin:0 auto; padding:60px 24px 100px; }
+
+    body > * { opacity:0; transform:translateY(10px); transition:opacity 0.5s ease, transform 0.5s ease; }
+    body.loaded > * { opacity:1; transform:translateY(0); }
+    body.loaded > *:nth-child(1){transition-delay:0.05s}
+    body.loaded > *:nth-child(2){transition-delay:0.11s}
+    body.loaded > *:nth-child(3){transition-delay:0.17s}
+    body.loaded > *:nth-child(4){transition-delay:0.23s}
+    body.loaded > *:nth-child(5){transition-delay:0.29s}
+    body.loaded > *:nth-child(6){transition-delay:0.35s}
+    body.loaded > *:nth-child(7){transition-delay:0.41s}
+    body.loaded > *:nth-child(8){transition-delay:0.47s}
+    body.loaded > *:nth-child(9){transition-delay:0.53s}
+    body.loaded > *:nth-child(10){transition-delay:0.59s}
+    body.loaded > *:nth-child(11){transition-delay:0.65s}
+    body.loaded > *:nth-child(12){transition-delay:0.71s}
+
+    .back { display:inline-block; color:var(--accent-bright); text-decoration:none; margin-bottom:36px; font-size:0.9rem; border-bottom:1px solid transparent; transition:border-color 0.2s; }
+    .back:hover { border-bottom-color:var(--accent-bright); }
+
+    h1 { font-family:'IM Fell English',serif; font-size:2rem; font-weight:normal; color:var(--accent-bright); margin-bottom:6px; }
+    .subtitle { color:var(--muted); font-size:0.82rem; font-style:italic; margin-bottom:36px; }
+
+    .section { margin-top:32px; }
+    .section-title {
+      font-family:'IM Fell English',serif; font-size:0.82rem;
+      letter-spacing:0.09em; color:var(--muted);
+      border-bottom:1px solid var(--border); padding-bottom:4px; margin-bottom:14px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .section-title::after { content:'· · ·'; color:var(--accent); opacity:0.45; font-size:0.72rem; letter-spacing:0.18em; flex:1; }
+
+    p { color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+    p strong { color:var(--accent-bright); font-weight:normal; }
+
+    ul { list-style:none; margin-bottom:10px; }
+    ul li { color:var(--muted); font-size:0.9rem; padding:3px 0; }
+    ul li::before { content:'— '; color:var(--accent-bright); }
+
+    blockquote {
+      border-left:2px solid var(--accent); padding-left:14px;
+      color:var(--muted); font-style:italic; margin:20px 0; font-size:0.88rem;
+    }
+
+    .img-block { width:100%; margin:24px 0; position:relative; overflow:hidden; }
+    .img-block img {
+      width:100%; display:block;
+      filter:grayscale(0.55) brightness(0.5) contrast(1.15);
+      transition:filter 0.6s ease;
+    }
+    .img-block:hover img { filter:grayscale(0.2) brightness(0.65) contrast(1.1); }
+    .img-block .caption {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:8px 12px;
+      background:linear-gradient(transparent, rgba(0,0,0,0.88));
+      color:var(--muted); font-size:0.72rem; font-style:italic;
+    }
+
+    .spec-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:1px;
+      background:var(--border); margin:20px 0;
+    }
+    .spec-cell { background:var(--bg); padding:10px 14px; }
+    .spec-cell .label { color:var(--accent-bright); font-size:0.75rem; letter-spacing:0.06em; margin-bottom:2px; }
+    .spec-cell .value { color:var(--muted); font-size:0.85rem; }
+
+    .mod-block {
+      border:1px solid var(--border); padding:14px 16px; margin:12px 0;
+      position:relative;
+    }
+    .mod-block .mod-title {
+      color:var(--accent-bright); font-size:0.82rem;
+      letter-spacing:0.05em; margin-bottom:6px;
+    }
+    .mod-block p { margin-bottom:0; }
+
+    .video-wrap {
+      margin:24px 0; position:relative;
+      padding-bottom:56.25%; height:0; overflow:hidden;
+      border:1px solid var(--border);
+    }
+    .video-wrap iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
+    .video-label { color:var(--muted); font-size:0.72rem; font-style:italic; margin-top:6px; }
+
+    a { color:var(--link); text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.15s, color 0.15s; }
+    a:hover { border-bottom-color:var(--link); color:#cc2020; }
+
+    body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:9998; }
+    ::selection { background:var(--accent); color:#fff; }
+    @media(max-width:480px){ body{padding:40px 18px 80px} h1{font-size:1.7rem} .spec-grid{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <a class="back" href="thoughts.html">← back</a>
+
+  <h1>the x220 cult</h1>
+  <p class="subtitle">why a 2011 laptop still has a following in 2026.</p>
+
+  <div class="section">
+    <div class="section-title">the last real thinkpad</div>
+    <p>in 2012, lenovo switched to chiclet keys. the forums went quiet for a day, then erupted. the X220 was the last model with the classic 7-row keyboard — the one IBM designed, the one every person who actually types for a living still talks about.</p>
+    <p>that keyboard is why the X220 has a cult. not the specs. not the price. the <strong>keyboard</strong>.</p>
+    <p>but once you're in the door for the keyboard, you find everything else: the repairability, the upgrade path, the community, the documentation going back 15 years. you buy one for $80 and three months later you know what a CMOS battery is, you've replaced the thermal paste, and you're on a forum arguing about IPS panel mods at midnight.</p>
+    <p>that's the rabbit hole. the keyboard is just the entrance.</p>
+  </div>
+
+  <div class="img-block">
+    <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=600&q=60" alt="laptop keyboard close up" loading="lazy"/>
+    <div class="caption">the 7-row layout. island keys never came close.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">specs — 2011 on paper, usable in 2026</div>
+
+    <div class="spec-grid">
+      <div class="spec-cell">
+        <div class="label">CPU</div>
+        <div class="value">Intel Core i5/i7 Sandy Bridge (2nd gen)</div>
+      </div>
+      <div class="spec-cell">
+        <div class="label">RAM</div>
+        <div class="value">up to 16GB DDR3 (8GB official, 16GB works)</div>
+      </div>
+      <div class="spec-cell">
+        <div class="label">display</div>
+        <div class="value">12.5" TN stock — IPS swap available</div>
+      </div>
+      <div class="spec-cell">
+        <div class="label">storage</div>
+        <div class="value">SATA III SSD, mSATA slot (dual storage)</div>
+      </div>
+      <div class="spec-cell">
+        <div class="label">battery</div>
+        <div class="value">internal + optional slice battery (14hr+)</div>
+      </div>
+      <div class="spec-cell">
+        <div class="label">weight</div>
+        <div class="value">~1.36kg. lighter than you expect.</div>
+      </div>
+    </div>
+
+    <p>the Sandy Bridge i7 in the X220 is still a capable processor for everyday work. terminal, browser, code editor, documents — nothing breaks a sweat. pair it with an SSD and 16GB of RAM and it feels faster than machines that cost 10x as much and were built three years ago.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">the upgrade path</div>
+    <p>the X220's modification community is extensive enough that it has its own vocabulary, its own legends (RealBlackStuff on the forums), and its own tier list of what to do first.</p>
+
+    <div class="mod-block">
+      <div class="mod-title">// 01 — SSD (do this first)</div>
+      <p>if it's still on a spinning disk, nothing else matters. SATA III SSD, ~$25. the machine transforms. boot times go from 45 seconds to 8.</p>
+    </div>
+
+    <div class="mod-block">
+      <div class="mod-title">// 02 — RAM to 16GB</div>
+      <p>lenovo officially maxes at 8GB. 16GB works fine — people have been running it for years. two 8GB DDR3 1600MHz SODIMMs. ~$20. the BIOS complains once and then gets over it.</p>
+    </div>
+
+    <div class="mod-block">
+      <div class="mod-title">// 03 — IPS panel swap</div>
+      <p>the stock TN display is the weakest part of the machine. an IPS swap (LP125WH2-SLT1 or similar) runs ~$25 from AliExpress. viewing angles go from embarrassing to perfectly fine. takes 15 minutes and a spudger. no soldering required for the standard swap.</p>
+    </div>
+
+    <div class="mod-block">
+      <div class="mod-title">// 04 — 1vyrain BIOS mod (whitelist removal)</div>
+      <p>lenovo's BIOS has a WiFi card whitelist — it will refuse to boot if it detects an "unauthorized" card. 1vyrain exploits a vulnerability in the stock BIOS to flash a modified version that removes the whitelist. no hardware required. you can then drop in an Intel AX200 or Atheros card for modern WiFi. also unlocks power limits and some hidden settings.</p>
+    </div>
+
+    <div class="mod-block">
+      <div class="mod-title">// 05 — thermal paste</div>
+      <p>14-year-old paste. replace it. Noctua NT-H1 or Thermal Grizzly Kryonaut. temperatures drop 10–20°C. the fan stops constantly. takes 20 minutes and costs $8.</p>
+    </div>
+
+    <div class="mod-block">
+      <div class="mod-title">// 06 — slice battery</div>
+      <p>the X220 supports an external "slice" battery that clips to the bottom, doubling capacity. with both batteries, you're looking at 10–14 hours of real use. no other 12.5" laptop from this era comes close.</p>
+    </div>
+
+    <div class="mod-block">
+      <div class="mod-title">// 07 — libreboot (if you're serious)</div>
+      <p>the X220 supports coreboot via 1vyrain for basic BIOS freedom. for full libreboot, you'll need external flash hardware — the X220 isn't directly supported by libreboot yet (that's the X230/X200 territory), but the coreboot path gets you most of the way there with less hassle.</p>
+    </div>
+  </div>
+
+  <div class="video-wrap">
+    <iframe src="https://www.youtube.com/embed/Nlxrc3iHt8w" title="ThinkPad X220 mods and upgrades" allowfullscreen loading="lazy"></iframe>
+  </div>
+  <p class="video-label">// X220 mods and upgrades — how to make a laptop last forever</p>
+
+  <div class="video-wrap" style="margin-top:18px;">
+    <iframe src="https://www.youtube.com/embed/umOdmxiDDdk" title="ThinkPad X220 in 2025" allowfullscreen loading="lazy"></iframe>
+  </div>
+  <p class="video-label">// ThinkPad X220 in 2025 — running Arch Linux</p>
+
+  <div class="section">
+    <div class="section-title">the keyboard, properly</div>
+    <p>the 7-row keyboard has individual keys at a standard pitch with proper travel — around 2mm. the chiclet keyboards that replaced it have shallower travel, smaller keycaps, and a flatter feel. the difference isn't subtle.</p>
+    <p>the trackpoint is the other half of it. red dot in the middle of the keyboard, no hands leave the home row to grab a mouse. people who learn to use it properly never go back. people who try it for five minutes and give up are not the target audience.</p>
+    <ul>
+      <li>key travel: ~2mm vs ~1.2mm on most modern laptops</li>
+      <li>key pitch: 19mm — full-size desktop keyboard spacing</li>
+      <li>the X220 keyboard layout has dedicated keys that were removed or combined from the X230 onwards</li>
+      <li>replacement keyboards are still available, still cheap</li>
+    </ul>
+    <blockquote>"the x220 is the last x-series with a good keyboard. with a 1080p panel, 16GB and the classic layout, I think I could be quite happy with it for a long time."<br>— thinkpads forum, 2013. still quoted today.</blockquote>
+  </div>
+
+  <div class="img-block">
+    <img src="https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=600&q=60" alt="person typing on laptop" loading="lazy"/>
+    <div class="caption">hands on home row. trackpoint. no mouse needed.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">what it can't do</div>
+    <p>being honest about it:</p>
+    <ul>
+      <li>no USB-C. no Thunderbolt. mini-DisplayPort and USB 3.0.</li>
+      <li>the iGPU (Intel HD 3000) will not run anything GPU-heavy. gaming is limited to older or lightweight titles.</li>
+      <li>the stock TN screen is genuinely bad. the IPS swap helps but it's still 1366×768.</li>
+      <li>Sandy Bridge has no AVX2. some modern software drops support eventually.</li>
+      <li>video calls at 1080p will struggle. the CPU can handle it but the webcam is 720p at best.</li>
+    </ul>
+    <p>if you need to run heavy VMs, edit 4K video, or compile large codebases daily — get a T480. the X220 is for <strong>people who know what they actually use a laptop for</strong>, and use it for that.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">why people are still buying them in 2026</div>
+    <ul>
+      <li>$50–120 on eBay. fully functional. libreboot-adjacent. IPS-swappable.</li>
+      <li>every screw is documented. every part is replaceable. the hardware manual is public.</li>
+      <li>the community has been maintaining this hardware for 15 years. nothing is unknown.</li>
+      <li>running void or alpine it boots in under 10 seconds and idles at under 5W.</li>
+      <li>it does what most people actually need a laptop to do. the rest is marketing.</li>
+    </ul>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+  </script>
+</body>
+</html>
