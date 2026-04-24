@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>libreboot · blurrinq</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#000000; --text:#e8e8e8; --accent:#8b0000;
+      --accent-bright:#b00000; --muted:#555555; --link:#b00000; --border:#1a1a1a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { background:var(--bg); color:var(--text); font-family:'Courier Prime',monospace; font-size:15px; line-height:1.75; }
+    body { max-width:600px; margin:0 auto; padding:60px 24px 100px; }
+
+    body > * { opacity:0; transform:translateY(10px); transition:opacity 0.5s ease, transform 0.5s ease; }
+    body.loaded > * { opacity:1; transform:translateY(0); }
+    body.loaded > *:nth-child(1){transition-delay:0.05s}
+    body.loaded > *:nth-child(2){transition-delay:0.12s}
+    body.loaded > *:nth-child(3){transition-delay:0.19s}
+    body.loaded > *:nth-child(4){transition-delay:0.26s}
+    body.loaded > *:nth-child(5){transition-delay:0.33s}
+    body.loaded > *:nth-child(6){transition-delay:0.40s}
+    body.loaded > *:nth-child(7){transition-delay:0.47s}
+    body.loaded > *:nth-child(8){transition-delay:0.54s}
+    body.loaded > *:nth-child(9){transition-delay:0.61s}
+    body.loaded > *:nth-child(10){transition-delay:0.68s}
+    body.loaded > *:nth-child(11){transition-delay:0.75s}
+    body.loaded > *:nth-child(12){transition-delay:0.82s}
+
+    .back { display:inline-block; color:var(--accent-bright); text-decoration:none; margin-bottom:36px; font-size:0.9rem; border-bottom:1px solid transparent; transition:border-color 0.2s; }
+    .back:hover { border-bottom-color:var(--accent-bright); }
+
+    h1 { font-family:'IM Fell English',serif; font-size:2rem; font-weight:normal; color:var(--accent-bright); margin-bottom:6px; }
+    .subtitle { color:var(--muted); font-size:0.82rem; font-style:italic; margin-bottom:36px; }
+
+    .section { margin-top:32px; }
+    .section-title {
+      font-family:'IM Fell English',serif; font-size:0.82rem;
+      letter-spacing:0.09em; color:var(--muted);
+      border-bottom:1px solid var(--border); padding-bottom:4px; margin-bottom:14px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .section-title::after { content:'· · ·'; color:var(--accent); opacity:0.45; font-size:0.72rem; letter-spacing:0.18em; flex:1; }
+
+    p { color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+    p strong { color:var(--accent-bright); font-weight:normal; }
+
+    ul { list-style:none; margin-bottom:10px; }
+    ul li { color:var(--muted); font-size:0.9rem; padding:3px 0; }
+    ul li::before { content:'— '; color:var(--accent-bright); }
+
+    blockquote {
+      border-left:2px solid var(--accent); padding-left:14px;
+      color:var(--muted); font-style:italic; margin:20px 0; font-size:0.88rem;
+    }
+
+    /* device support table */
+    .device-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:1px;
+      background:var(--border); margin:20px 0;
+    }
+    .device-cell { background:var(--bg); padding:10px 14px; }
+    .device-cell .model { color:var(--accent-bright); font-size:0.85rem; }
+    .device-cell .note { color:var(--muted); font-size:0.75rem; margin-top:2px; }
+
+    /* terminal/code blocks */
+    .terminal {
+      background:#050505; border:1px solid #1a0000;
+      padding:16px; margin:20px 0; font-size:0.8rem;
+      overflow-x:auto;
+    }
+    .terminal .comment { color:#3a0000; }
+    .terminal .cmd { color:var(--muted); }
+    .terminal .bright { color:var(--accent-bright); }
+    .terminal .line { margin:3px 0; }
+
+    /* step blocks */
+    .step {
+      border-left:2px solid var(--border); padding:10px 0 10px 16px;
+      margin:10px 0; position:relative;
+    }
+    .step:hover { border-left-color:var(--accent); }
+    .step-num {
+      position:absolute; left:-10px; top:10px;
+      background:var(--bg); color:var(--accent-bright);
+      font-size:0.72rem; padding:0 3px; letter-spacing:0.05em;
+    }
+    .step p { margin-bottom:4px; }
+
+    /* warning box */
+    .warning {
+      border:1px solid #3a0000; padding:14px 16px; margin:20px 0;
+      font-size:0.82rem; color:#6b0000; letter-spacing:0.02em;
+      position:relative;
+    }
+    .warning::before {
+      content:'// WARNING'; position:absolute; top:-1px; left:12px;
+      background:var(--bg); padding:0 6px;
+      color:var(--accent-bright); font-size:0.72rem; letter-spacing:0.1em;
+    }
+
+    /* comparison table */
+    .compare {
+      width:100%; border-collapse:collapse; margin:20px 0; font-size:0.82rem;
+    }
+    .compare th {
+      color:var(--accent-bright); font-weight:normal; font-family:'IM Fell English',serif;
+      font-size:0.85rem; padding:8px 10px; border-bottom:1px solid var(--border);
+      text-align:left;
+    }
+    .compare td {
+      color:var(--muted); padding:8px 10px; border-bottom:1px solid #0e0e0e;
+      vertical-align:top;
+    }
+    .compare tr:last-child td { border-bottom:none; }
+    .compare .yes { color:#2a6b00; }
+    .compare .no { color:#6b0000; }
+    .compare .partial { color:#5a4a00; }
+    .compare tr.highlight td { color:#444; }
+
+    /* video embed wrapper */
+    .video-wrap {
+      margin:24px 0; position:relative;
+      padding-bottom:56.25%; height:0; overflow:hidden;
+      border:1px solid var(--border);
+    }
+    .video-wrap iframe {
+      position:absolute; top:0; left:0;
+      width:100%; height:100%; border:none;
+    }
+    .video-label { color:var(--muted); font-size:0.72rem; font-style:italic; margin-top:6px; }
+
+    /* img block */
+    .img-block { width:100%; margin:24px 0; position:relative; overflow:hidden; }
+    .img-block img {
+      width:100%; display:block;
+      filter:grayscale(0.5) brightness(0.55) contrast(1.1);
+      transition:filter 0.6s ease;
+    }
+    .img-block:hover img { filter:grayscale(0.2) brightness(0.7) contrast(1.05); }
+    .img-block .caption {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:8px 12px;
+      background:linear-gradient(transparent, rgba(0,0,0,0.88));
+      color:var(--muted); font-size:0.72rem; font-style:italic;
+    }
+
+    a { color:var(--link); text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.15s, color 0.15s; }
+    a:hover { border-bottom-color:var(--link); color:#cc2020; }
+
+    body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:9998; }
+    ::selection { background:var(--accent); color:#fff; }
+    @media(max-width:480px){ body{padding:40px 18px 80px} h1{font-size:1.7rem} .device-grid{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <a class="back" href="thoughts.html">← back</a>
+
+  <h1>libreboot</h1>
+  <p class="subtitle">replacing the firmware they never wanted you to touch.</p>
+
+  <div class="section">
+    <div class="section-title">what is it</div>
+    <p>your BIOS is the first code your machine runs. before your OS, before your disk encryption, before anything you control — proprietary firmware is already executing. you can't read it. you can't audit it. you just trust it.</p>
+    <p><strong>libreboot</strong> replaces that. it's a free, open-source firmware distribution built on top of coreboot, stripped of every proprietary binary blob possible. fully auditable. fully yours.</p>
+    <p>it boots fast, strips out surveillance infrastructure, and gives you a machine that actually belongs to you from the moment you press the power button.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">intel ME — the computer inside your computer</div>
+    <p>Intel Management Engine is a separate processor embedded in every Intel chipset since 2008. it runs its own OS (based on Minix), has direct memory access, network access, and operates <strong>independently of your main CPU</strong> — even when the machine is "off."</p>
+    <p>you cannot disable it through software. you cannot inspect it. it persists through OS reinstalls. it predates your kernel loading. it has never been fully reverse engineered.</p>
+    <ul>
+      <li>runs at ring -3 — below the kernel, below the hypervisor, below everything</li>
+      <li>has its own TCP/IP stack and can communicate over the network without OS involvement</li>
+      <li>Intel AMT (a feature of ME) allows remote access to the machine — screen, keyboard, storage</li>
+      <li>a critical vulnerability in AMT was disclosed in 2017 — silent remote auth bypass, existed since 2010</li>
+      <li>on older hardware (pre-ME v6), it can be <strong>completely removed</strong></li>
+      <li>on modern hardware, libreboot uses <strong>me_cleaner</strong> to strip ~90% of ME firmware, leaving only what's needed to boot</li>
+    </ul>
+    <p>on supported ThinkPads like the X200 and T400, libreboot removes ME entirely. gone. not disabled. <strong>removed.</strong></p>
+
+    <div class="img-block">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=60" alt="circuit board closeup" loading="lazy"/>
+      <div class="caption">the ME processor is on the chipset. you can't see it. that's intentional.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">supported thinkpads</div>
+    <p>libreboot is selective. it only supports hardware where truly free firmware is achievable. most of its best-supported machines are ThinkPads — built to be repaired, documented, and opened.</p>
+
+    <div class="device-grid">
+      <div class="device-cell">
+        <div class="model">ThinkPad X200 / X200s</div>
+        <div class="note">ME fully removable. best choice for full freedom.</div>
+      </div>
+      <div class="device-cell">
+        <div class="model">ThinkPad T400 / T400s</div>
+        <div class="note">ME fully removable. GM45+ICH9M chipset.</div>
+      </div>
+      <div class="device-cell">
+        <div class="model">ThinkPad X60 / X60s</div>
+        <div class="note">no ME at all. oldest and cleanest supported machine.</div>
+      </div>
+      <div class="device-cell">
+        <div class="model">ThinkPad T60</div>
+        <div class="note">Intel GPU variants only. ATI models not supported.</div>
+      </div>
+      <div class="device-cell">
+        <div class="model">ThinkPad X230</div>
+        <div class="note">ME neutralized via me_cleaner. external flash required first.</div>
+      </div>
+      <div class="device-cell">
+        <div class="model">ThinkPad T480 / T480s</div>
+        <div class="note">newest supported. ME neutered via "deguard" technique. Dec 2024.</div>
+      </div>
+    </div>
+    <p>the T480 support is significant — it's the first modern ThinkPad to get libreboot, enabled by a newly discovered technique that breaks ME's security model entirely on that platform.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">why bother</div>
+    <ul>
+      <li>your current BIOS is <strong>closed source</strong>. nobody outside Intel and your OEM has audited it.</li>
+      <li>firmware-level malware survives OS reinstalls, disk wipes, everything</li>
+      <li>libreboot boots in <strong>~1–2 seconds</strong>. proprietary BIOS takes 10–30.</li>
+      <li>no vendor lock-in. no phone-home. no update servers.</li>
+      <li>your threat model probably includes firmware if you're running cachy, mullvad, and tuta</li>
+      <li>it's the logical conclusion of caring about what runs on your machine</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">how to flash — step by step</div>
+
+    <div class="warning" style="padding-top:20px;">
+      a failed flash can permanently brick your machine. no recovery. no warranty. if you rush this, you will own a very flat paperweight. read everything twice before doing it once.
+    </div>
+
+    <p>this guide covers the <strong>X230</strong> (external flash) and <strong>X200</strong> (internal flash possible). the T480 process differs — see libreboot.org for that specific board.</p>
+
+    <p style="margin-top:16px; color:var(--accent-bright); font-size:0.82rem; letter-spacing:0.05em;">// EXTERNAL FLASHING (recommended for first flash)</p>
+
+    <div class="step">
+      <div class="step-num">01</div>
+      <p><strong>what you need:</strong> a Raspberry Pi (any model), SOIC-8 clip, jumper wires, and the target ThinkPad. the clip attaches to the BIOS chip without soldering.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+      <p><strong>identify your BIOS chip.</strong> disassemble the ThinkPad and locate the SPI flash chip — usually labeled SST25VF016B or MX25L6406E. it's an 8-pin IC on the motherboard. check the libreboot docs for your specific board's chip location.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+      <p><strong>wire the clip to the Pi.</strong> connect the SOIC clip to the Pi's GPIO pins. standard wiring: VCC → 3.3V, GND → GND, CS → CE0, CLK → SCLK, MOSI → MOSI, MISO → MISO. <em>do not power the ThinkPad while clipped.</em></p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">04</div>
+      <p><strong>install flashprog on the Pi</strong> and verify you can read the chip:</p>
+      <div class="terminal">
+        <div class="line comment"># install flashprog</div>
+        <div class="line cmd">sudo apt install flashprog</div>
+        <div class="line"> </div>
+        <div class="line comment"># read existing BIOS — do this twice and diff the outputs</div>
+        <div class="line cmd">sudo flashprog -p linux_spi:dev=/dev/spidev0.0,spispeed=512 -r backup1.bin</div>
+        <div class="line cmd">sudo flashprog -p linux_spi:dev=/dev/spidev0.0,spispeed=512 -r backup2.bin</div>
+        <div class="line cmd">diff backup1.bin backup2.bin</div>
+        <div class="line"> </div>
+        <div class="line comment"># if diff is silent, your read is clean. keep backup1.bin somewhere safe.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">05</div>
+      <p><strong>download the libreboot ROM</strong> for your board from <a href="https://libreboot.org" target="_blank">libreboot.org</a>. verify the SHA512 checksum. pick the right payload — SeaGRUB if you want GRUB in flash, SeaBIOS if you want legacy boot.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">06</div>
+      <p><strong>insert vendor files</strong> if using a release ROM (not source build). libreboot release ROMs ship without certain vendor-specific files. run <code style="color:var(--accent-bright)">lbmk</code> to inject them from your backup:</p>
+      <div class="terminal">
+        <div class="line cmd">./vendor inject -r libreboot.rom -b x230_12mb</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">07</div>
+      <p><strong>flash it:</strong></p>
+      <div class="terminal">
+        <div class="line cmd">sudo flashprog -p linux_spi:dev=/dev/spidev0.0,spispeed=512 \</div>
+        <div class="line cmd">&nbsp;&nbsp;-w libreboot.rom --verify</div>
+        <div class="line"> </div>
+        <div class="line comment"># --verify re-reads after writing and compares. non-negotiable.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">08</div>
+      <p><strong>remove the clip, reassemble, power on.</strong> if you see GRUB or SeaBIOS — you're done. if you see nothing, stay calm, re-clip, and re-flash from your backup.</p>
+    </div>
+
+    <p style="margin-top:20px; color:var(--accent-bright); font-size:0.82rem; letter-spacing:0.05em;">// INTERNAL FLASHING (X200, X60, some others)</p>
+    <p>on machines like the X200 where internal flashing is possible from Lenovo BIOS, libreboot ships two patched flashrom binaries to handle different BIOS chip manufacturers:</p>
+    <div class="terminal">
+      <div class="line comment"># run both — only one will succeed depending on your chip</div>
+      <div class="line cmd">sudo ./flashrom_lenovobios_sst -p internal -r backup.bin</div>
+      <div class="line cmd">sudo ./flashrom_lenovobios_macronix -p internal -r backup.bin</div>
+      <div class="line"> </div>
+      <div class="line comment"># whichever created backup.bin — use that binary to flash</div>
+      <div class="line cmd">sudo ./flashrom_lenovobios_[sst|macronix] -p internal -w libreboot.rom</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">video walkthrough</div>
+    <p>if you prefer to watch before touching hardware — this covers the X230 external flash process end to end:</p>
+    <div class="video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/mOsqCtm3YKo"
+        title="Libreboot X230 flashing guide"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
+    <p class="video-label">// ThinkPad X230 libreboot flash — external SPI method</p>
+
+    <div class="video-wrap" style="margin-top:18px;">
+      <iframe
+        src="https://www.youtube.com/embed/xdyrM-T_3jg"
+        title="Intel ME explanation"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
+    <p class="video-label">// Intel ME — what it is, why it matters</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">bricking risks</div>
+    <div class="warning" style="padding-top:20px;">
+      brick = the machine no longer boots. no OS, no BIOS screen, nothing. the only recovery is re-flashing externally — which requires another working machine and the hardware clip setup. if you didn't back up your original BIOS, recovery may be impossible.
+    </div>
+    <ul>
+      <li>flashing the wrong ROM for your board — <strong>verify model and chip size</strong> (8MB vs 12MB)</li>
+      <li>dirty read — if your two backup reads don't match, the connection is unstable. fix before writing.</li>
+      <li>power loss mid-flash — keep everything on stable power. no laptops running on battery.</li>
+      <li>flashing a T400/T60 with an ATI GPU variant — only Intel GPU models are supported</li>
+      <li>skipping vendor file injection on release ROMs — machine won't initialize memory properly</li>
+      <li>Boot Guard — on Haswell (4th gen Intel) and newer OEM machines, Intel Boot Guard cryptographically prevents unsigned firmware. libreboot cannot run on these. <strong>check your hardware before buying.</strong></li>
+    </ul>
+    <p>the T480 is specifically supported because Lenovo did not enable Boot Guard on it. this is rare. most modern ThinkPads are locked.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">libreboot vs the alternatives</div>
+
+    <table class="compare">
+      <thead>
+        <tr>
+          <th>firmware</th>
+          <th>blob-free</th>
+          <th>ME removed</th>
+          <th>ease of use</th>
+          <th>hardware support</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td><strong style="color:var(--accent-bright)">libreboot</strong></td>
+          <td class="yes">yes</td>
+          <td class="yes">yes / partial</td>
+          <td class="partial">moderate</td>
+          <td class="no">limited</td>
+        </tr>
+        <tr>
+          <td>coreboot</td>
+          <td class="no">no (blobs allowed)</td>
+          <td class="partial">partial</td>
+          <td class="no">hard</td>
+          <td class="yes">wide</td>
+        </tr>
+        <tr>
+          <td>Heads</td>
+          <td class="partial">mostly</td>
+          <td class="partial">partial</td>
+          <td class="no">very hard</td>
+          <td class="no">very limited</td>
+        </tr>
+        <tr>
+          <td>osboot</td>
+          <td class="partial">mostly</td>
+          <td class="partial">partial</td>
+          <td class="partial">moderate</td>
+          <td class="partial">moderate</td>
+        </tr>
+        <tr>
+          <td>vendor BIOS</td>
+          <td class="no">no</td>
+          <td class="no">no</td>
+          <td class="yes">easy</td>
+          <td class="yes">full</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>coreboot</strong> is the foundation everything else builds on — including libreboot. but coreboot itself allows vendor blobs (Intel FSP, AMD AGESA) for hardware support. it's open source but not free. the hardware compatibility is broader but the firmware isn't clean.</p>
+    <p><strong>Heads</strong> is interesting — it's designed for measured boot and tamper detection, pairs with a TPM, and is used by high-security setups like Purism and some Qubes configurations. technically impressive. extremely difficult. not designed for general use.</p>
+    <p><strong>osboot</strong> is essentially libreboot's sibling — also a coreboot distribution, also focused on freedom, slightly more pragmatic about blob inclusion on some boards. less strict than libreboot.</p>
+    <p>libreboot is the most principled of the group. it refuses blobs even when that means dropping hardware support. that inflexibility is a feature, not a bug. if it's on the supported list, it's actually clean. no asterisks.</p>
+  </div>
+
+  <blockquote>
+    "the goal is a machine that is yours from the first instruction executed."
+  </blockquote>
+
+  <div class="section">
+    <div class="section-title">where to start</div>
+    <ul>
+      <li>if you have an X200 or T400 — internal flash is possible. cleanest result. ME fully gone.</li>
+      <li>if you have an X230 — external flash required for first install. worth doing.</li>
+      <li>if you want modern hardware — T480/T480s are your best option right now. also available pre-flashed from certain vendors.</li>
+      <li>official docs: <a href="https://libreboot.org/docs/install/" target="_blank">libreboot.org/docs/install</a></li>
+      <li>don't have compatible hardware — buy pre-flashed. the process is documented, the risk is real.</li>
+    </ul>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+  </script>
+</body>
+</html>
