@@ -56,8 +56,9 @@
 
     .distro-header { display:flex; align-items:center; gap:14px; margin-bottom:12px; }
     .distro-logo { width:36px; height:36px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
-    .distro-logo img { width:36px; height:36px; object-fit:contain; filter:grayscale(0.3) brightness(0.85); transition:filter 0.3s; }
-    .distro:hover .distro-logo img { filter:grayscale(0) brightness(1); }
+    .distro-logo img { width:36px; height:36px; object-fit:contain; transition:filter 0.3s; }
+    .distro-logo svg { transition:opacity 0.3s; opacity:0.7; }
+    .distro:hover .distro-logo svg { opacity:1; }
     .distro-title-group { flex:1; }
     .distro-name { font-family:'IM Fell English',serif; font-size:1.15rem; color:var(--accent-bright); line-height:1.2; }
     .distro-tag { font-size:0.72rem; color:var(--muted); letter-spacing:0.05em; }
@@ -103,7 +104,10 @@
     <div class="rank-badge">// S tier</div>
     <div class="distro-header">
       <div class="distro-logo">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/Void_Linux_logo.svg" alt="Void Linux" onerror="this.style.display='none'"/>
+        <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="18,4 32,28 4,28" fill="none" stroke="#b00000" stroke-width="2.5"/>
+          <polygon points="18,11 27,26 9,26" fill="#b00000" opacity="0.3"/>
+        </svg>
       </div>
       <div class="distro-title-group">
         <div class="distro-name">Void Linux</div>
@@ -135,7 +139,11 @@
     <div class="rank-badge">// S tier</div>
     <div class="distro-header">
       <div class="distro-logo">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/CachyOS_logo.svg" alt="CachyOS" onerror="this.style.display='none'"/>
+        <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="14" fill="none" stroke="#b00000" stroke-width="2.5"/>
+          <path d="M18 7 A11 11 0 0 1 29 18" fill="none" stroke="#b00000" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="18" cy="18" r="4" fill="#b00000" opacity="0.5"/>
+        </svg>
       </div>
       <div class="distro-title-group">
         <div class="distro-name">CachyOS</div>
@@ -166,7 +174,11 @@
     <div class="rank-badge">// A tier</div>
     <div class="distro-header">
       <div class="distro-logo">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Alpine_Linux.svg" alt="Alpine Linux"/>
+        <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="18,3 35,33 1,33" fill="none" stroke="#b00000" stroke-width="2.5"/>
+          <line x1="18" y1="3" x2="18" y2="33" stroke="#b00000" stroke-width="1.5" opacity="0.5"/>
+          <line x1="1" y1="33" x2="35" y2="33" stroke="#b00000" stroke-width="2.5"/>
+        </svg>
       </div>
       <div class="distro-title-group">
         <div class="distro-name">Alpine Linux</div>
@@ -197,7 +209,15 @@
     <div class="rank-badge">// A tier</div>
     <div class="distro-header">
       <div class="distro-logo">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Artix_Linux_logo.svg" alt="Artix Linux" onerror="this.style.display='none'"/>
+        <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="14" fill="none" stroke="#b00000" stroke-width="2"/>
+          <circle cx="18" cy="18" r="8" fill="none" stroke="#b00000" stroke-width="2"/>
+          <circle cx="18" cy="18" r="3" fill="#b00000"/>
+          <line x1="18" y1="4" x2="18" y2="11" stroke="#b00000" stroke-width="2"/>
+          <line x1="18" y1="25" x2="18" y2="32" stroke="#b00000" stroke-width="2"/>
+          <line x1="4" y1="18" x2="11" y2="18" stroke="#b00000" stroke-width="2"/>
+          <line x1="25" y1="18" x2="32" y2="18" stroke="#b00000" stroke-width="2"/>
+        </svg>
       </div>
       <div class="distro-title-group">
         <div class="distro-name">Artix Linux</div>
@@ -228,7 +248,11 @@
     <div class="rank-badge">// B tier</div>
     <div class="distro-header">
       <div class="distro-logo">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/AntiX_logo.png/240px-AntiX_logo.png" alt="antiX" onerror="this.style.display='none'"/>
+        <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+          <line x1="4" y1="4" x2="32" y2="32" stroke="#b00000" stroke-width="3" stroke-linecap="round"/>
+          <line x1="32" y1="4" x2="4" y2="32" stroke="#b00000" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="18" cy="18" r="13" fill="none" stroke="#b00000" stroke-width="2"/>
+        </svg>
       </div>
       <div class="distro-title-group">
         <div class="distro-name">antiX</div>
@@ -259,7 +283,13 @@
     <div class="rank-badge">// specialist</div>
     <div class="distro-header">
       <div class="distro-logo">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Tiny_Core_Linux_Logo.png" alt="Tiny Core Linux" onerror="this.style.display='none'"/>
+        <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="14" fill="none" stroke="#b00000" stroke-width="2"/>
+          <circle cx="18" cy="18" r="7" fill="#b00000" opacity="0.4"/>
+          <circle cx="18" cy="18" r="3" fill="#b00000"/>
+          <line x1="18" y1="4" x2="18" y2="32" stroke="#b00000" stroke-width="1.5" opacity="0.4"/>
+          <line x1="4" y1="18" x2="32" y2="18" stroke="#b00000" stroke-width="1.5" opacity="0.4"/>
+        </svg>
       </div>
       <div class="distro-title-group">
         <div class="distro-name">Tiny Core Linux</div>
