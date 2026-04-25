@@ -14,21 +14,49 @@
     * { margin:0; padding:0; box-sizing:border-box; }
     html { background:var(--bg); color:var(--text); font-family:'Courier Prime',monospace; font-size:15px; line-height:1.75; }
     body { max-width:600px; margin:0 auto; padding:60px 24px 100px; }
+
     body > * { opacity:0; transform:translateY(10px); transition:opacity 0.5s ease, transform 0.5s ease; }
     body.loaded > * { opacity:1; transform:translateY(0); }
     body.loaded > *:nth-child(1) { transition-delay:0.05s; }
     body.loaded > *:nth-child(2) { transition-delay:0.12s; }
     body.loaded > *:nth-child(3) { transition-delay:0.19s; }
+    body.loaded > *:nth-child(4) { transition-delay:0.26s; }
+
     .back { display:inline-block; color:var(--accent); text-decoration:none; margin-bottom:32px; font-size:0.9rem; border-bottom:1px solid transparent; transition:border-color 0.2s; }
     .back:hover { border-bottom-color:var(--accent); }
-    h1 { font-family:'IM Fell English',serif; font-size:2rem; font-weight:normal; color:var(--accent); margin-bottom:32px; }
-    .post { border-bottom:1px solid var(--border); padding:18px 0; }
-    .post:last-child { border-bottom:none; }
-    .post-date { color:var(--muted); font-size:0.8rem; margin-bottom:4px; }
+
+    h1 { font-family:'IM Fell English',serif; font-size:2rem; font-weight:normal; color:var(--accent); margin-bottom:24px; }
+
+    .filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:32px; }
+    .filter-btn {
+      font-family:'Courier Prime',monospace; font-size:0.72rem;
+      color:var(--muted); background:none;
+      border:1px solid var(--border); padding:3px 10px;
+      cursor:pointer; letter-spacing:0.06em;
+      transition:color 0.15s, border-color 0.15s;
+    }
+    .filter-btn:hover { color:var(--accent); border-color:#3a0000; }
+    .filter-btn.active { color:var(--accent); border-color:var(--accent); }
+
+    .post {
+      border-bottom:1px solid var(--border); padding:16px 0;
+      transition:opacity 0.25s ease, transform 0.25s ease;
+    }
+    .post:last-of-type { border-bottom:none; }
+    .post.hidden { opacity:0; pointer-events:none; height:0; padding:0; overflow:hidden; border:none; transform:translateY(-4px); }
+
+    .post-meta { display:flex; align-items:baseline; gap:12px; margin-bottom:3px; }
+    .post-date { color:var(--muted); font-size:0.78rem; }
+    .post-tags { display:flex; gap:6px; }
+
     .post-title { font-family:'IM Fell English',serif; font-size:1.2rem; }
-    .post-title a { color:var(--muted); text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.2s, color 0.2s; }
+    .post-title a { color:#3d3d3d; text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.2s, color 0.2s; }
+    .post-title a { color:#555555; text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.2s, color 0.2s; }
     .post-title a:hover { border-bottom-color:var(--link); color:var(--link); }
-    .empty { color:var(--muted); font-style:italic; margin-top:24px; }
+    .post-tag { font-size:0.68rem; color:#5a0000; letter-spacing:0.06em; }
+
+    .no-results { color:var(--muted); font-style:italic; padding:16px 0; display:none; font-size:0.88rem; }
+
     ::selection { background:#8b0000; color:#fff; }
     body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:9998; }
   </style>
@@ -36,37 +64,95 @@
 <body>
   <a class="back" href="index.html">← back</a>
   <h1>blurrinq's thoughts</h1>
-  <div class="post">
-    <div class="post-date">2026 — I</div>
+
+  <div class="filters">
+    <button class="filter-btn active" data-tag="all">all</button>
+    <button class="filter-btn" data-tag="hardware">hardware</button>
+    <button class="filter-btn" data-tag="linux">linux</button>
+    <button class="filter-btn" data-tag="privacy">privacy</button>
+    <button class="filter-btn" data-tag="firmware">firmware</button>
+    <button class="filter-btn" data-tag="urbex">urbex</button>
+  </div>
+
+  <div class="post" data-tags="hardware linux">
+    <div class="post-meta">
+      <div class="post-date">I</div>
+      <div class="post-tags"><span class="post-tag">[hardware]</span><span class="post-tag">[linux]</span></div>
+    </div>
     <div class="post-title"><a href="x220.html">the x220 cult</a></div>
   </div>
-  <div class="post">
-    <div class="post-date">2026 — II</div>
+
+  <div class="post" data-tags="hardware privacy firmware">
+    <div class="post-meta">
+      <div class="post-date">II</div>
+      <div class="post-tags"><span class="post-tag">[hardware]</span><span class="post-tag">[privacy]</span><span class="post-tag">[firmware]</span></div>
+    </div>
     <div class="post-title"><a href="ewaste.html">e-waste as a threat model</a></div>
   </div>
-  <div class="post">
-    <div class="post-date">2026 — III</div>
+
+  <div class="post" data-tags="linux hardware">
+    <div class="post-meta">
+      <div class="post-date">III</div>
+      <div class="post-tags"><span class="post-tag">[linux]</span><span class="post-tag">[hardware]</span></div>
+    </div>
     <div class="post-title"><a href="distros.html">lightweight linux, ranked</a></div>
   </div>
-  <div class="post">
-    <div class="post-date">2025 — IV</div>
+
+  <div class="post" data-tags="firmware privacy hardware">
+    <div class="post-meta">
+      <div class="post-date">IV</div>
+      <div class="post-tags"><span class="post-tag">[firmware]</span><span class="post-tag">[privacy]</span><span class="post-tag">[hardware]</span></div>
+    </div>
     <div class="post-title"><a href="libreboot.html">libreboot</a></div>
   </div>
-  <div class="post">
-    <div class="post-date">2025 — I</div>
+
+  <div class="post" data-tags="privacy">
+    <div class="post-meta">
+      <div class="post-date">V</div>
+      <div class="post-tags"><span class="post-tag">[privacy]</span></div>
+    </div>
     <div class="post-title"><a href="disappear.html">how to disappear</a></div>
   </div>
-  <div class="post">
-    <div class="post-date">2025 — II</div>
+
+  <div class="post" data-tags="urbex">
+    <div class="post-meta">
+      <div class="post-date">VI</div>
+      <div class="post-tags"><span class="post-tag">[urbex]</span></div>
+    </div>
     <div class="post-title"><a href="walls.html">what's in the walls</a></div>
   </div>
-  <div class="post">
-    <div class="post-date">2025 — III</div>
+
+  <div class="post" data-tags="privacy">
+    <div class="post-meta">
+      <div class="post-date">VII</div>
+      <div class="post-tags"><span class="post-tag">[privacy]</span></div>
+    </div>
     <div class="post-title"><a href="watching.html">why they're watching</a></div>
   </div>
 
+  <div class="no-results" id="no-results">nothing here.</div>
+
   <script>
     window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+    const btns = document.querySelectorAll('.filter-btn');
+    const posts = document.querySelectorAll('.post');
+    const noResults = document.getElementById('no-results');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tag = btn.dataset.tag;
+        let visible = 0;
+        posts.forEach(post => {
+          const show = tag === 'all' || post.dataset.tags.includes(tag);
+          post.classList.toggle('hidden', !show);
+          if (show) visible++;
+        });
+        noResults.style.display = visible === 0 ? 'block' : 'none';
+      });
+    });
   </script>
 </body>
 </html>
